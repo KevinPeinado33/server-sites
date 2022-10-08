@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 
 import { UserUseCase } from '../../application/usecases/user.usecase'
+import { message } from '../../../configuration/responses/api-responses'
 
 export class UserController {
     
@@ -17,7 +18,9 @@ export class UserController {
 
         const { id } = params
 
-        res.json({
+        message({
+            res,
+            code: { type:'SUCCESS', value: 200 },
             msg: `Se encontro este ${ id }`
         })
 
@@ -30,18 +33,24 @@ export class UserController {
             const user = await this.userUseCase.createUser( body )
 
             if (!user) {
-                return res.status(404).json({
-                    msg: 'Usuario no creado!'
+                return message({
+                    res,
+                    code: { type: 'INTERNAL_ERROR', value: 500 },
+                    msg: 'Error al crear el usuario'
                 })
             }
-            
-            res.status(201).json({
+
+            message({
+                res,
+                code: { type: 'CREATED', value: 201 },
                 msg: 'Usuario creado correctamente!',
-                user
+                payload: user
             })
 
         } catch( error: any ){
-            return res.status(500).json({
+            return message({
+                res, 
+                code: { type: 'INTERNAL_ERROR', value: 500 },
                 msg: 'Ops, Error con el servidor',
                 error
             })
@@ -53,9 +62,11 @@ export class UserController {
         
         const { id } = params
 
-        res.json({
+        message({
+            res,
+            code: { type: 'SUCCESS', value: 200 },
             msg: `Actualizar usuario con id ${ id }`,
-            response: body
+            payload: body
         })
 
     }
@@ -67,18 +78,24 @@ export class UserController {
             const users = await this.userUseCase.getAllUser()
             
             if (!users) {
-                return res.status(404).json({
+                return message({
+                    res,
+                    code: { type: 'NOT_FOUND', value: 404 },
                     msg: 'No se encontraron usuarios!'
                 })
             }
 
-            res.json({
-                msg: 'Lista de todos los usuarios',
-                users 
+            message({
+                res,
+                code: { type: 'SUCCESS', value: 200 },
+                msg: 'Todos los usuarios',
+                payload: users
             })
 
         } catch(error: any) {
-            return res.status(500).json({
+            return message({
+                res, 
+                code: { type: 'INTERNAL_ERROR', value: 500 },
                 msg: 'Ops, error con el servidor!',
                 error
             })

@@ -4,7 +4,7 @@ import cors from 'cors'
 import db from '../database/connection'
 import userRoutes from '../../user/infraestructure/router/user.router'
 
-class Server {
+export class Server {
 
     private app : Application
     private port: string
@@ -47,5 +47,3 @@ class Server {
     }
 
 }
-
-export default Server
