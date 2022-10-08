@@ -43,6 +43,8 @@ export class Server {
             swaggerUI.serve, 
             swaggerUI.setup(swaggerJSDoc( options ))
         )
+
+        console.log(`🚛 Swagger is already on: http://localhost:${this.port}/api-docs `)
     }
 
     async dbConnection() {
