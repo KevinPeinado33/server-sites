@@ -2,8 +2,9 @@ import { Repository } from 'sequelize-typescript'
 
 import { UserModel } from '../../domain/model/user.model'
 import { UserDto } from '../../domain/dto/user.dto'
+import { UserUseCaseInterface } from '../interfaces/user.interfaces'
 
-export class UserUseCase {
+export class UserUseCase implements UserUseCaseInterface {
 
     constructor(
         private readonly userRepository: Repository<UserModel>
