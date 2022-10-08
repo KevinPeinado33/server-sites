@@ -18,9 +18,10 @@ const {
     getUsers
 } = userController
 
+
+router.post('/create',     postUser)
 router.get ('/get-all',    getUsers)
 router.get ('/:id',        getUserById)
-router.post('/create',     postUser)
 router.put ('/update/:id', putUser)
 
 export default router

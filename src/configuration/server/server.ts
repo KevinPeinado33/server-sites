@@ -1,8 +1,11 @@
 import express, { Application } from 'express'
 import cors from 'cors'
+import swaggerUI from 'swagger-ui-express'
+import swaggerJSDoc from 'swagger-jsdoc'
 
 import db from '../database/connection'
 import userRoutes from '../../user/infraestructure/router/user.router'
+import { options } from '../documentation/swagger'
 
 export class Server {
 
@@ -24,7 +27,7 @@ export class Server {
 
     listen() {
         this.app.listen(this.port, () => {
-            console.log(`Server is already on port: ${this.port}`)
+            console.log(`🎯 Server is already on port: ${this.port}`)
         })
     }
 
@@ -35,6 +38,11 @@ export class Server {
     middlewares() {
         this.app.use(cors())
         this.app.use(express.json())
+        this.app.use(
+            '/api-docs', 
+            swaggerUI.serve, 
+            swaggerUI.setup(swaggerJSDoc( options ))
+        )
     }
 
     async dbConnection() {
