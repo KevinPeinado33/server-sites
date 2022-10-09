@@ -55,7 +55,7 @@
  * @swagger
  * /api/users/get-all:
  *  get:
- *      summar: Todos los usuarios sin exepciones
+ *      summary: Todos los usuarios sin exepciones
  *      tags: [ User ]
  *      responses:
  *          200:
