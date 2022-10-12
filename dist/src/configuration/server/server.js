@@ -19,9 +19,10 @@ const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const connection_1 = __importDefault(require("../database/connection"));
 const user_router_1 = __importDefault(require("../../user/infraestructure/router/user.router"));
-const swagger_1 = require("../documentation/swagger");
+const swagger_1 = require("../swagger/swagger");
 class Server {
     constructor() {
+        this.PATH_SWAGGER = '/api-docs';
         this.paths = {
             user: '/api/users'
         };
@@ -42,8 +43,8 @@ class Server {
     middlewares() {
         this.app.use((0, cors_1.default)());
         this.app.use(express_1.default.json());
-        this.app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup((0, swagger_jsdoc_1.default)(swagger_1.options)));
-        console.log(`🚛 Swagger is already on: http://localhost:${this.port}/api-docs `);
+        this.app.use(this.PATH_SWAGGER, swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup((0, swagger_jsdoc_1.default)(swagger_1.options)));
+        console.log(`🚛 Swagger is already on: http://localhost:${this.port}${this.PATH_SWAGGER}`);
     }
     dbConnection() {
         return __awaiter(this, void 0, void 0, function* () {

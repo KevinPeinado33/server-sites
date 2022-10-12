@@ -100,7 +100,7 @@ export class UserController {
                 error
             })
         }
-
+        
     }
 
 }

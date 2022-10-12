@@ -23,5 +23,5 @@ npm run dev
 ## Para entrar a la documentación de las API's
 
 ```bash
-http://localhost:8000/v2/swagger-ui.html
+http://localhost:8000/api-docs
 ```

@@ -5,9 +5,11 @@ import swaggerJSDoc from 'swagger-jsdoc'
 
 import db from '../database/connection'
 import userRoutes from '../../user/infraestructure/router/user.router'
-import { options } from '../documentation/swagger'
+import { options } from '../swagger/swagger'
 
 export class Server {
+
+    private PATH_SWAGGER = '/api-docs'
 
     private app : Application
     private port: string
@@ -39,12 +41,12 @@ export class Server {
         this.app.use(cors())
         this.app.use(express.json())
         this.app.use(
-            '/api-docs', 
+            this.PATH_SWAGGER, 
             swaggerUI.serve, 
             swaggerUI.setup(swaggerJSDoc( options ))
         )
 
-        console.log(`🚛 Swagger is already on: http://localhost:${this.port}/api-docs `)
+        console.log(`🚛 Swagger is already on: http://localhost:${this.port}${this.PATH_SWAGGER}`)
     }
 
     async dbConnection() {
