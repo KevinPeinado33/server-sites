@@ -61,3 +61,31 @@
  *          200:
  *              description: List de todos los usuarios obtenido
  */
+
+/**
+ * @swagger
+ * /api/users/get-nati:
+ *  get:
+ *      summary: consulta nativa
+ *      tags: [ User ]
+ *      responses:
+ *          200:
+ *              description: List de todos los usuarios obtenido
+ */
+
+/**
+ * @swagger
+ * /api/users/buscar/{id}:
+ *  get:
+ *      summary: buscar usuario por el id
+ *      tags: [ User ]
+ *      parameters:
+ *          -   in: path
+ *              name: id
+ *              schema:
+ *                  type: number
+ *              required: true
+ *      responses:
+ *          200:
+ *              description: buscada de usuario por el id
+ */

@@ -19,7 +19,7 @@ __decorate([
     (0, sequelize_typescript_1.Column)({
         primaryKey: true
     }),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], UserModel.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({

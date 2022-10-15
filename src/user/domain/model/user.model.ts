@@ -18,7 +18,7 @@ export class UserModel extends Model {
     @Column({
         primaryKey: true
     })
-    id?: string
+    id?: number
 
     @Column({
         type: DataType.STRING,

@@ -18,13 +18,14 @@ class UserController {
         this.postUser = this.postUser.bind(this);
         this.putUser = this.putUser.bind(this);
         this.getUsers = this.getUsers.bind(this);
+        this.getSqlPrueba = this.getSqlPrueba.bind(this);
     }
     getUserById({ params }, res) {
         const { id } = params;
         (0, api_responses_1.message)({
             res,
             code: { type: 'SUCCESS', value: 200 },
-            msg: `Se encontro este ${id}`
+            msg: `Se acaba de encontrar este usuario con id: ${id}`
         });
     }
     postUser({ body }, res) {
@@ -80,6 +81,27 @@ class UserController {
                     code: { type: 'SUCCESS', value: 200 },
                     msg: 'Todos los usuarios',
                     payload: users
+                });
+            }
+            catch (error) {
+                return (0, api_responses_1.message)({
+                    res,
+                    code: { type: 'INTERNAL_ERROR', value: 500 },
+                    msg: 'Ops, error con el servidor!',
+                    error
+                });
+            }
+        });
+    }
+    getSqlPrueba(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const data = yield this.userUseCase.getUserBySqlNative();
+                (0, api_responses_1.message)({
+                    res,
+                    code: { type: 'SUCCESS', value: 200 },
+                    msg: 'Consulta native hecha correctamente!',
+                    payload: data
                 });
             }
             catch (error) {

@@ -8,10 +8,11 @@ export class UserController {
     constructor(
         private readonly userUseCase: UserUseCase
     ) {
-        this.getUserById = this.getUserById.bind(this)
-        this.postUser    = this.postUser.bind(this)
-        this.putUser     = this.putUser.bind(this)
-        this.getUsers    = this.getUsers.bind(this)
+        this.getUserById  = this.getUserById.bind(this)
+        this.postUser     = this.postUser.bind(this)
+        this.putUser      = this.putUser.bind(this)
+        this.getUsers     = this.getUsers.bind(this)
+        this.getSqlPrueba = this.getSqlPrueba.bind(this)
     }
 
     getUserById({ params }: Request, res: Response) {
@@ -21,7 +22,7 @@ export class UserController {
         message({
             res,
             code: { type:'SUCCESS', value: 200 },
-            msg: `Se encontro este ${ id }`
+            msg: `Se acaba de encontrar este usuario con id: ${ id }`
         })
 
     }
@@ -103,4 +104,28 @@ export class UserController {
         
     }
 
+    async getSqlPrueba(req: Request, res: Response) {
+        
+        try {
+
+            const data = await this.userUseCase.getUserBySqlNative()
+
+            message({
+                res,
+                code: { type: 'SUCCESS', value: 200 },
+                msg: 'Consulta native hecha correctamente!',
+                payload: data
+            })
+
+        } catch(error: any) {
+            return message({
+                res, 
+                code: { type: 'INTERNAL_ERROR', value: 500 },
+                msg: 'Ops, error con el servidor!',
+                error
+            })
+        }
+
+    }
+    
 }

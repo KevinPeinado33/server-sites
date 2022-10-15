@@ -11,5 +11,7 @@ export interface UserUseCaseInterface {
     createUser(user: UserDto): Promise< UserModel >
 
     getAllUser(): Promise< UserModel[] >
+
+    getUserBySqlNative(): Promise< any >
     
 }

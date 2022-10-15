@@ -9,34 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserUseCase = void 0;
-class UserUseCase {
-    constructor(repository, userRepository) {
+exports.UserRepository = void 0;
+class UserRepository {
+    constructor(repository) {
         this.repository = repository;
-        this.userRepository = userRepository;
     }
-    signIn(userName, password) {
+    getUserByQueryNative() {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.repository.findOne({
-                where: { userName, password }
-            });
-        });
-    }
-    createUser(user) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.repository.create(Object.assign({}, user));
-        });
-    }
-    getAllUser() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.repository.findAll();
-        });
-    }
-    getUserBySqlNative() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.userRepository.getUserByQueryNative();
+            const query = 'SELECT * FROM tb_users';
+            const [results, metadata] = yield ((_a = this
+                .repository
+                .sequelize) === null || _a === void 0 ? void 0 : _a.query(query));
+            return results;
         });
     }
 }
-exports.UserUseCase = UserUseCase;
-//# sourceMappingURL=user.usecase.js.map
+exports.UserRepository = UserRepository;
+//# sourceMappingURL=user.repository.js.map
