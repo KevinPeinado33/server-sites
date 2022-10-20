@@ -48,7 +48,7 @@ export class UserController {
                 payload: user
             })
 
-        } catch( error: any ){
+        } catch( error: any ) {
             return message({
                 res, 
                 code: { type: 'INTERNAL_ERROR', value: 500 },

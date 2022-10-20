@@ -16,7 +16,7 @@ export const message = ({
 
             res.status(code.value).json({
                 msg, 
-                error
+                error: error ?? null
             })
 
             break

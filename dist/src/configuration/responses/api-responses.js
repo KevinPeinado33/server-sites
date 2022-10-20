@@ -8,7 +8,7 @@ const message = ({ res, code, msg, payload, error }) => {
         case 'INTERNAL_ERROR':
             res.status(code.value).json({
                 msg,
-                error
+                error: error !== null && error !== void 0 ? error : null
             });
             break;
         case 'CREATED':

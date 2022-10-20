@@ -49,6 +49,8 @@
  *      responses:
  *          201:
  *              description: Usuario creado correctamente!
+ *          500:
+ *              description: Error con el server
  */
 /**
  * @swagger
