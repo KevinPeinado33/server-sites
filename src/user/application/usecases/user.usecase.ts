@@ -30,9 +30,13 @@ export class UserUseCase implements UserUseCaseInterface {
     }
 
     async getUserBySqlNative(): Promise< any > {
+        return await this.userRepository.getUserByQueryNative()    
+    }
 
-        return await this.userRepository.getUserByQueryNative()
-    
+    async findUserByEmail(email: string): Promise< UserModel | null > {
+        return await this.repository.findOne({
+            where: { email }
+        })
     }
 
 }

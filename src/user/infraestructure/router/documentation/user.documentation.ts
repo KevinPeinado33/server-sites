@@ -35,6 +35,28 @@
 
 /**
  * @swagger
+ * /api/users/sign-in:
+ *  post:
+ *      summary: Logeo de usuario que retorna un token de JWT
+ *      tags: [ User ]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          email:
+ *                              type: string
+ *                          passw:
+ *                              type: string
+ *      responses:
+ *          200:
+ *              description: Devuelve el usuario completo con el token generado.
+ */
+
+/**
+ * @swagger
  * /api/users/create:
  *  post:
  *      summary: Creacion de nuevo usuario
@@ -46,6 +68,12 @@
  *                  schema:
  *                      type: object
  *                      $ref: '#/components/schemas/User'
+ *      parameters:
+ *          -   name: x-token
+ *              in: header
+ *              description: Token de autorización
+ *              type: string
+ *              required: tru
  *      responses:
  *          201:
  *              description: Usuario creado correctamente!

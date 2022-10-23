@@ -2,6 +2,8 @@ import { Request, Response } from 'express'
 
 import { UserUseCase } from '../../application/usecases/user.usecase'
 import { message } from '../../../configuration/responses/api-responses'
+import { catchError } from '../../../helpers/errors/catch-error.helper'
+import { generateKey } from '../../../helpers/jwt/generate-jwt.helper'
 
 export class UserController {
     
@@ -13,6 +15,56 @@ export class UserController {
         this.putUser      = this.putUser.bind(this)
         this.getUsers     = this.getUsers.bind(this)
         this.getSqlPrueba = this.getSqlPrueba.bind(this)
+        this.signIn       = this.signIn.bind(this)
+    }
+
+    async signIn({ body }: Request, res: Response) {
+        
+        const { email, passw } = body
+
+        try {
+
+            const user = await this.userUseCase.findUserByEmail( email )
+
+            if ( !user ) {
+                return message({
+                    res,
+                    code: { type: 'BAD_REQUEST', value: 400 },
+                    msg: `El correo ${ email }, no se ha encontrado.`
+                })
+            }
+            
+            if ( passw !== user.password ) {
+                return message({
+                    res,
+                    code: { type: 'BAD_REQUEST', value: 400 },
+                    msg: `Contraseña incorrecta!`
+                })
+            }
+
+            if ( !user.isActive ) {
+                return message({
+                    res,
+                    code: { type: 'BAD_REQUEST', value: 400 },
+                    msg: `El usuario ${ user.names } está desactivado!`
+                })    
+            }
+
+            const token = await generateKey( user.id! )
+
+            const { password, ...userClean } = user
+
+            message({
+                res,
+                code: { type: 'SUCCESS', value: 200 },
+                msg: 'Inicio de sesión correcto!',
+                payload: { user: userClean, token }
+            })
+            
+        } catch( error: any ) {
+            catchError( error, res )
+        }
+
     }
 
     getUserById({ params }: Request, res: Response) {
@@ -49,12 +101,7 @@ export class UserController {
             })
 
         } catch( error: any ) {
-            return message({
-                res, 
-                code: { type: 'INTERNAL_ERROR', value: 500 },
-                msg: 'Ops, Error con el servidor',
-                error
-            })
+            catchError( error, res )
         }
 
     }
@@ -94,12 +141,7 @@ export class UserController {
             })
 
         } catch(error: any) {
-            return message({
-                res, 
-                code: { type: 'INTERNAL_ERROR', value: 500 },
-                msg: 'Ops, error con el servidor!',
-                error
-            })
+            catchError( error, res )
         }
         
     }
@@ -118,12 +160,7 @@ export class UserController {
             })
 
         } catch(error: any) {
-            return message({
-                res, 
-                code: { type: 'INTERNAL_ERROR', value: 500 },
-                msg: 'Ops, error con el servidor!',
-                error
-            })
+            catchError( error, res )
         }
 
     }

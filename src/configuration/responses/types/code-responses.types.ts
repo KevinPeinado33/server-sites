@@ -4,3 +4,4 @@ export type CodeResponseType =
     | { type: 'BAD_REQUEST',    value: 400 }
     | { type: 'NOT_FOUND',      value: 404 }
     | { type: 'CREATED',        value: 201 }
+    | { type: 'UNAUTHORIZED',   value: 401 }

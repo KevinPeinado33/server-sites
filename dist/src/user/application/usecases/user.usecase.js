@@ -37,6 +37,13 @@ class UserUseCase {
             return yield this.userRepository.getUserByQueryNative();
         });
     }
+    findUserByEmail(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.repository.findOne({
+                where: { email }
+            });
+        });
+    }
 }
 exports.UserUseCase = UserUseCase;
 //# sourceMappingURL=user.usecase.js.map

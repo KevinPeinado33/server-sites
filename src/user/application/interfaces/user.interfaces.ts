@@ -13,5 +13,7 @@ export interface UserUseCaseInterface {
     getAllUser(): Promise< UserModel[] >
 
     getUserBySqlNative(): Promise< any >
+
+    findUserByEmail(email: string): Promise< UserModel | null >
     
 }
