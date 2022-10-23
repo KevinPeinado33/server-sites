@@ -15,13 +15,6 @@ class UserUseCase {
         this.repository = repository;
         this.userRepository = userRepository;
     }
-    signIn(userName, password) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.repository.findOne({
-                where: { userName, password }
-            });
-        });
-    }
     createUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.repository.create(Object.assign({}, user));
@@ -42,6 +35,11 @@ class UserUseCase {
             return yield this.repository.findOne({
                 where: { email }
             });
+        });
+    }
+    findUserById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.repository.findByPk(id);
         });
     }
 }

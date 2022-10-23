@@ -6,7 +6,6 @@ import { UserModel } from '../../domain/model/user.model'
 import { UserRepository } from '../../domain/repository/user.repository'
 import { UserUseCase } from '../../application/usecases/user.usecase'
 import { UserController } from '../controller/user.controller'
-import { validateJWT } from '../../../middlewares/auth/validate-jwt.middleware';
 
 const router            = Router()
 
@@ -20,7 +19,8 @@ const {
     putUser,
     getUsers,
     getSqlPrueba,
-    signIn
+    signIn,
+    validateJWT
 } = userController
 
 

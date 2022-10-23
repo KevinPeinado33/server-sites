@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
 
+import jwt from 'jsonwebtoken'
+
 import { UserUseCase } from '../../application/usecases/user.usecase'
 import { message } from '../../../configuration/responses/api-responses'
 import { catchError } from '../../../helpers/errors/catch-error.helper'
@@ -16,6 +18,7 @@ export class UserController {
         this.getUsers     = this.getUsers.bind(this)
         this.getSqlPrueba = this.getSqlPrueba.bind(this)
         this.signIn       = this.signIn.bind(this)
+        this.validateJWT  = this.validateJWT.bind(this)
     }
 
     async signIn({ body }: Request, res: Response) {
@@ -52,19 +55,52 @@ export class UserController {
 
             const token = await generateKey( user.id! )
 
-            const { password, ...userClean } = user
-
             message({
                 res,
                 code: { type: 'SUCCESS', value: 200 },
                 msg: 'Inicio de sesión correcto!',
-                payload: { user: userClean, token }
+                payload: { user, token }
             })
             
         } catch( error: any ) {
             catchError( error, res )
         }
 
+    }
+
+    async validateJWT(req: Request, res: Response, next: Function) {
+        
+        const token     = req.header('x-token')
+        const secretKey = process.env.SECRET_KEY || ''
+    
+        if ( !token ) {
+            return message({
+                res,
+                code: { type: 'UNAUTHORIZED', value: 401 },
+                msg: 'No hay token en la petición!'
+            })
+        }
+    
+        try {
+    
+            const { uuid } : any = jwt.verify( token, secretKey )
+    
+            const user = await this.userUseCase.findUserById( uuid )
+    
+            if ( !user ) {
+                return message({
+                    res,
+                    code: { type: 'UNAUTHORIZED', value: 401 },
+                    msg: 'Token no valido, usuario no existe en BBDD.'
+                })
+            }
+    
+            next()
+    
+        } catch ( error: any ) {
+            catchError( error, res )
+        }
+    
     }
 
     getUserById({ params }: Request, res: Response) {
@@ -80,6 +116,8 @@ export class UserController {
     }
 
     async postUser({ body }: Request, res: Response) {
+
+        console.log({ body })
 
         try {
             

@@ -12,6 +12,7 @@ export const message = ({
         
         case 'NOT_FOUND':
         case 'BAD_REQUEST':
+        case 'UNAUTHORIZED':
         case 'INTERNAL_ERROR':
 
             res.status(code.value).json({

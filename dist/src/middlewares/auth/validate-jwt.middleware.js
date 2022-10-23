@@ -20,6 +20,7 @@ const catch_error_helper_1 = require("../../helpers/errors/catch-error.helper");
 const validateJWT = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.header('x-token');
     const secretKey = process.env.SECRET_KEY || '';
+    console.log({ token, secretKey });
     if (!token) {
         return (0, api_responses_1.message)({
             res,
@@ -29,6 +30,7 @@ const validateJWT = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
     try {
         const { uuid } = jsonwebtoken_1.default.verify(token, secretKey);
+        console.log({ uuid });
         const user = yield user_model_1.UserModel.findOne({
             where: { id: Number(uuid) }
         });

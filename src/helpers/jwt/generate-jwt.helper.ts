@@ -11,7 +11,7 @@ export const generateKey = ( uuid: number ) => {
             payload, 
             secretKey, 
             { expiresIn: '24h' }, 
-            ( error, token) => {
+            ( error, token ) => {
 
                 if ( error ) {
                     

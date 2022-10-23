@@ -5,6 +5,7 @@ const message = ({ res, code, msg, payload, error }) => {
     switch (code.type) {
         case 'NOT_FOUND':
         case 'BAD_REQUEST':
+        case 'UNAUTHORIZED':
         case 'INTERNAL_ERROR':
             res.status(code.value).json({
                 msg,

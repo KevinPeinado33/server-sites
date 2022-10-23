@@ -2,11 +2,6 @@ import { UserModel } from '../../domain/model/user.model'
 import { UserDto } from '../../domain/dto/user.dto'
 
 export interface UserUseCaseInterface {
-    
-    signIn(
-        userName: string, 
-        password: string
-    ): Promise< UserModel | null >
 
     createUser(user: UserDto): Promise< UserModel >
 
@@ -15,5 +10,7 @@ export interface UserUseCaseInterface {
     getUserBySqlNative(): Promise< any >
 
     findUserByEmail(email: string): Promise< UserModel | null >
+
+    findUserById(id: number): Promise< UserModel | null >
     
 }

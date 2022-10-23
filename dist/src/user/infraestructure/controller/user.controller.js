@@ -8,19 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const api_responses_1 = require("../../../configuration/responses/api-responses");
 const catch_error_helper_1 = require("../../../helpers/errors/catch-error.helper");
 const generate_jwt_helper_1 = require("../../../helpers/jwt/generate-jwt.helper");
@@ -33,6 +26,7 @@ class UserController {
         this.getUsers = this.getUsers.bind(this);
         this.getSqlPrueba = this.getSqlPrueba.bind(this);
         this.signIn = this.signIn.bind(this);
+        this.validateJWT = this.validateJWT.bind(this);
     }
     signIn({ body }, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -61,13 +55,40 @@ class UserController {
                     });
                 }
                 const token = yield (0, generate_jwt_helper_1.generateKey)(user.id);
-                const { password } = user, userClean = __rest(user, ["password"]);
                 (0, api_responses_1.message)({
                     res,
                     code: { type: 'SUCCESS', value: 200 },
                     msg: 'Inicio de sesión correcto!',
-                    payload: { user: userClean, token }
+                    payload: { user, token }
                 });
+            }
+            catch (error) {
+                (0, catch_error_helper_1.catchError)(error, res);
+            }
+        });
+    }
+    validateJWT(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const token = req.header('x-token');
+            const secretKey = process.env.SECRET_KEY || '';
+            if (!token) {
+                return (0, api_responses_1.message)({
+                    res,
+                    code: { type: 'UNAUTHORIZED', value: 401 },
+                    msg: 'No hay token en la petición!'
+                });
+            }
+            try {
+                const { uuid } = jsonwebtoken_1.default.verify(token, secretKey);
+                const user = yield this.userUseCase.findUserById(uuid);
+                if (!user) {
+                    return (0, api_responses_1.message)({
+                        res,
+                        code: { type: 'UNAUTHORIZED', value: 401 },
+                        msg: 'Token no valido, usuario no existe en BBDD.'
+                    });
+                }
+                next();
             }
             catch (error) {
                 (0, catch_error_helper_1.catchError)(error, res);
@@ -84,6 +105,7 @@ class UserController {
     }
     postUser({ body }, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log({ body });
             try {
                 const user = yield this.userUseCase.createUser(body);
                 if (!user) {

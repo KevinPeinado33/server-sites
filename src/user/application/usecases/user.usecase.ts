@@ -12,15 +12,6 @@ export class UserUseCase implements UserUseCaseInterface {
         private readonly userRepository : UserRepository
     ) { }
 
-    async signIn(
-        userName: string, 
-        password: string
-    ): Promise< UserModel | null > {
-        return await this.repository.findOne({
-                where: { userName, password }
-        })
-    }
-
     async createUser(user: UserDto): Promise< UserModel > {
         return await this.repository.create({ ...user })
     }
@@ -37,6 +28,10 @@ export class UserUseCase implements UserUseCaseInterface {
         return await this.repository.findOne({
             where: { email }
         })
+    }
+
+    async findUserById(id: number): Promise< UserModel | null > {
+        return await this.repository.findByPk( id )
     }
 
 }

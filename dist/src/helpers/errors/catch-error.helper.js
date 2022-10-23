@@ -5,7 +5,7 @@ const api_responses_1 = require("../../configuration/responses/api-responses");
 const catchError = (error, res) => (0, api_responses_1.message)({
     res,
     code: { type: 'INTERNAL_ERROR', value: 500 },
-    msg: 'Ops, Error con el servidor',
+    msg: 'Oops, error con el servidor',
     error
 });
 exports.catchError = catchError;
