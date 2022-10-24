@@ -1,5 +1,7 @@
 import { Repository } from 'sequelize-typescript'
 
+import bcrypt from 'bcrypt'
+
 import { UserModel } from '../../domain/model/user.model'
 import { UserDto } from '../../domain/dto/user.dto'
 import { UserUseCaseInterface } from '../interfaces/user.interfaces'
@@ -7,13 +9,21 @@ import { UserRepository } from '../../domain/repository/user.repository'
 
 export class UserUseCase implements UserUseCaseInterface {
 
+    HASH_SALT_MAX = 10
+
     constructor(
         private readonly repository     : Repository< UserModel >,
         private readonly userRepository : UserRepository
     ) { }
 
     async createUser(user: UserDto): Promise< UserModel > {
+        
+        const salt    = await bcrypt.genSalt( this.HASH_SALT_MAX )
+
+        user.password = await bcrypt.hash( user.password, salt )
+
         return await this.repository.create({ ...user })
+
     }
 
     async getAllUser(): Promise< UserModel[] > {

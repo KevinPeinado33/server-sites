@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const api_responses_1 = require("../../../configuration/responses/api-responses");
 const catch_error_helper_1 = require("../../../helpers/errors/catch-error.helper");
@@ -40,7 +41,8 @@ class UserController {
                         msg: `El correo ${email}, no se ha encontrado.`
                     });
                 }
-                if (passw !== user.password) {
+                const isCorrectPassword = yield bcrypt_1.default.compare(passw, user.password);
+                if (!isCorrectPassword) {
                     return (0, api_responses_1.message)({
                         res,
                         code: { type: 'BAD_REQUEST', value: 400 },

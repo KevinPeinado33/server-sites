@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 
+import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 import { UserUseCase } from '../../application/usecases/user.usecase'
@@ -37,7 +38,9 @@ export class UserController {
                 })
             }
             
-            if ( passw !== user.password ) {
+            const isCorrectPassword = await bcrypt.compare( passw, user.password )            
+
+            if ( !isCorrectPassword ) {
                 return message({
                     res,
                     code: { type: 'BAD_REQUEST', value: 400 },
