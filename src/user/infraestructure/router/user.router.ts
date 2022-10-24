@@ -24,30 +24,11 @@ const {
 } = userController
 
 
-router.post(
-    '/sign-in',     
-    signIn
-)
-router.get(
-    '/get-all',    
-    getUsers
-)
-router.get(
-    '/buscar/:id', 
-    getUserById
-)
-router.post(
-    '/create', 
-    validateJWT, 
-    postUser
-)
-router.put(
-    '/update/:id', 
-    putUser
-)
-router.get(
-    '/get-nati',   
-    getSqlPrueba
-)
+router.post('/sign-in',    signIn)
+router.get ('/get-all',    getUsers)
+router.get ('/buscar/:id', getUserById)
+router.post('/create',     validateJWT, postUser)
+router.put ('/update/:id', putUser)
+router.get ('/get-nati',   getSqlPrueba)
 
 export default router
