@@ -18,12 +18,14 @@ const cors_1 = __importDefault(require("cors"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const connection_1 = __importDefault(require("../database/connection"));
-const user_router_1 = __importDefault(require("../../user/infraestructure/router/user.router"));
 const swagger_1 = require("../swagger/swagger");
+const user_router_1 = __importDefault(require("../../user/infraestructure/router/user.router"));
+const auth_router_1 = __importDefault(require("../../user/infraestructure/router/auth.router"));
 class Server {
     constructor() {
         this.PATH_SWAGGER = '/api-docs';
         this.paths = {
+            auth: '/api/auth',
             user: '/api/users'
         };
         this.app = (0, express_1.default)();
@@ -39,6 +41,7 @@ class Server {
     }
     routes() {
         this.app.use(this.paths.user, user_router_1.default);
+        this.app.use(this.paths.auth, auth_router_1.default);
     }
     middlewares() {
         this.app.use((0, cors_1.default)());

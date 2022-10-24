@@ -6,5 +6,8 @@ export const options = {
             version: '1.0.0'
         }
     },
-    apis: [ 'src/user/infraestructure/router/documentation/user.documentation.ts' ]
+    apis: [ 
+        'src/user/infraestructure/router/documentation/user.documentation.ts',
+        'src/user/infraestructure/router/documentation/auth.documentation.ts'
+    ]
 }
