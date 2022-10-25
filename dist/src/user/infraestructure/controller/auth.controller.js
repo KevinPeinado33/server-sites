@@ -24,9 +24,21 @@ class AuthController {
         this.signIn = this.signIn.bind(this);
         this.validateJWT = this.signIn.bind(this);
     }
+    /**
+     * Para iniciar sesion en al app hay 2 maneras de hacerlo, las cuales son
+     * modo profesor y modo adminisrador, el modo profesor recibimos unicamente
+     * el correo, para verificar en la white list y crearle su JWT; y
+     * el modo administrador es con correo y contrasenia.
+     *
+     * @param param0
+     * @param res
+     * @returns
+     */
     signIn({ body }, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { email, passw } = body;
+            const isTeacher = Boolean(email) && !Boolean(passw);
+            let token;
             try {
                 const user = yield this.userUseCase.findUserByEmail(email);
                 if (!user) {
@@ -34,6 +46,22 @@ class AuthController {
                         res,
                         code: { type: 'BAD_REQUEST', value: 400 },
                         msg: `El correo ${email}, no se ha encontrado.`
+                    });
+                }
+                if (!user.isActive) {
+                    return (0, api_responses_1.message)({
+                        res,
+                        code: { type: 'BAD_REQUEST', value: 400 },
+                        msg: `El usuario ${user.names} está desactivado!`
+                    });
+                }
+                if (isTeacher) {
+                    token = yield (0, generate_jwt_helper_1.generateKey)(user.id);
+                    return (0, api_responses_1.message)({
+                        res,
+                        code: { type: 'SUCCESS', value: 200 },
+                        msg: `Bienvenido profesor ${user.names} !`,
+                        payload: { user, token }
                     });
                 }
                 const isCorrectPassword = yield bcrypt_1.default.compare(passw, user.password);
@@ -44,18 +72,11 @@ class AuthController {
                         msg: `Contraseña incorrecta!`
                     });
                 }
-                if (!user.isActive) {
-                    return (0, api_responses_1.message)({
-                        res,
-                        code: { type: 'BAD_REQUEST', value: 400 },
-                        msg: `El usuario ${user.names} está desactivado!`
-                    });
-                }
-                const token = yield (0, generate_jwt_helper_1.generateKey)(user.id);
+                token = yield (0, generate_jwt_helper_1.generateKey)(user.id);
                 (0, api_responses_1.message)({
                     res,
                     code: { type: 'SUCCESS', value: 200 },
-                    msg: 'Inicio de sesión correcto!',
+                    msg: `Bienvenido ${user.names} !`,
                     payload: { user, token }
                 });
             }
@@ -68,6 +89,7 @@ class AuthController {
         return __awaiter(this, void 0, void 0, function* () {
             const token = req.header('x-token');
             const secretKey = process.env.SECRET_KEY || '';
+            console.log({ token });
             if (!token) {
                 return (0, api_responses_1.message)({
                     res,
@@ -88,7 +110,7 @@ class AuthController {
                 next();
             }
             catch (error) {
-                (0, catch_error_helper_1.catchError)(error, res);
+                (0, catch_error_helper_1.catchError)(error, res, 'El tiempo límite del token ha expirado!');
             }
         });
     }

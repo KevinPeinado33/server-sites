@@ -51,7 +51,7 @@
  *              in: header
  *              description: Token de autorización
  *              type: string
- *              required: tru
+ *              required: true
  *      responses:
  *          201:
  *              description: Usuario creado correctamente!
