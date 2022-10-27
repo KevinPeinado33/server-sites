@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 
 import { UserUseCase } from '../../application/usecases/user.usecase'
 import { generateKey } from '../../../helpers/jwt/generate-jwt.helper'
@@ -14,8 +13,7 @@ export class AuthController {
     constructor(
         private readonly userUseCase: UserUseCase
     ) {
-        this.signIn      = this.signIn.bind(this)
-        this.validateJWT = this.signIn.bind(this)
+        this.signIn = this.signIn.bind(this)
     }
 
     /**
@@ -92,43 +90,6 @@ export class AuthController {
             catchError( error, res )
         }
 
-    }
-
-    async validateJWT(req: Request, res: Response, next: Function) {
-        
-        const token     = req.header('x-token')
-        const secretKey = process.env.SECRET_KEY || ''
-    
-        console.log({ token })
-        
-        if ( !token ) {
-            return message({
-                res,
-                code: { type: 'UNAUTHORIZED', value: 401 },
-                msg: 'No hay token en la petición!'
-            })
-        }
-    
-        try {
-    
-            const { uuid } : any = jwt.verify( token, secretKey )
-    
-            const user = await this.userUseCase.findUserById( uuid )
-    
-            if ( !user ) {
-                return message({
-                    res,
-                    code: { type: 'UNAUTHORIZED', value: 401 },
-                    msg: 'Token no valido, usuario no existe en BBDD.'
-                })
-            }
-    
-            next()
-    
-        } catch ( error: any ) {
-            catchError( error, res, 'El tiempo límite del token ha expirado!' )
-        }
-    
     }
 
 }

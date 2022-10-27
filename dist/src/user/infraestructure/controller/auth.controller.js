@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const generate_jwt_helper_1 = require("../../../helpers/jwt/generate-jwt.helper");
 const api_responses_1 = require("../../../configuration/responses/api-responses");
 const catch_error_helper_1 = require("../../../helpers/errors/catch-error.helper");
@@ -22,7 +21,6 @@ class AuthController {
     constructor(userUseCase) {
         this.userUseCase = userUseCase;
         this.signIn = this.signIn.bind(this);
-        this.validateJWT = this.signIn.bind(this);
     }
     /**
      * Para iniciar sesion en al app hay 2 maneras de hacerlo, las cuales son
@@ -82,35 +80,6 @@ class AuthController {
             }
             catch (error) {
                 (0, catch_error_helper_1.catchError)(error, res);
-            }
-        });
-    }
-    validateJWT(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const token = req.header('x-token');
-            const secretKey = process.env.SECRET_KEY || '';
-            console.log({ token });
-            if (!token) {
-                return (0, api_responses_1.message)({
-                    res,
-                    code: { type: 'UNAUTHORIZED', value: 401 },
-                    msg: 'No hay token en la petición!'
-                });
-            }
-            try {
-                const { uuid } = jsonwebtoken_1.default.verify(token, secretKey);
-                const user = yield this.userUseCase.findUserById(uuid);
-                if (!user) {
-                    return (0, api_responses_1.message)({
-                        res,
-                        code: { type: 'UNAUTHORIZED', value: 401 },
-                        msg: 'Token no valido, usuario no existe en BBDD.'
-                    });
-                }
-                next();
-            }
-            catch (error) {
-                (0, catch_error_helper_1.catchError)(error, res, 'El tiempo límite del token ha expirado!');
             }
         });
     }
