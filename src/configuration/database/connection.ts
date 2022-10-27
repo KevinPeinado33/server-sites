@@ -5,10 +5,10 @@ import { UserModel } from '../../user/domain/model/user.model'
 const db = new Sequelize({
     repositoryMode: true,
     dialect: 'postgres',
-    host: 'bahwhlmqa3asozcb1qq6-postgresql.services.clever-cloud.com',
-    username: 'ulqwrochhmlwhjl5mnmk',
-    password: 'FvmHVAAs5essB2rjkOym',
-    database: 'bahwhlmqa3asozcb1qq6',
+    host: '129.151.123.131',
+    username: 'postgres',
+    password: 'example',
+    database: 'postgres',
     // logging: false,
     models: [ UserModel ]
 })
