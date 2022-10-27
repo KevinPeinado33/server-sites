@@ -19,12 +19,14 @@ class EjeUseCase {
         return __awaiter(this, void 0, void 0, function* () {
             const results = yield this.ejeRepository.findAll();
             results.map((eje) => __awaiter(this, void 0, void 0, function* () {
-                /*  const resultsSub = await this.getSubEjesByIdEje( eje.id! )
-                 
-                 eje.subEjes! = [...resultsSub] */
-                return { nombre: 'gaaa' };
+                const resultsSub = yield this.getSubEjesByIdEje(eje.id);
+                eje.subEjes = [...resultsSub];
+                console.log(results);
             }));
-            console.log(results);
+            for (let i = 0; i < results.length; i++) {
+                const resultsSub = yield this.getSubEjesByIdEje(results[i].id);
+                results[i].subEjes = resultsSub;
+            }
             return results;
         });
     }
