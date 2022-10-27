@@ -1,7 +1,7 @@
 import { UserModel } from '../../domain/model/user.model'
 import { UserDto } from '../../domain/dto/user.dto'
 
-export interface UserUseCaseInterface {
+export interface UserServiceInterface {
 
     createUser(user: UserDto): Promise< UserModel >
 

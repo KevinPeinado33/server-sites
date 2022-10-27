@@ -9,6 +9,7 @@ import { options } from '../swagger/swagger'
 
 import userRoutes from '../../user/infraestructure/router/user.router'
 import authRoutes from '../../user/infraestructure/router/auth.router'
+import ejeRoutes  from '../../user/infraestructure/router/eje.router'
 
 export class Server {
 
@@ -19,7 +20,8 @@ export class Server {
 
     private paths = {
         auth: '/api/auth',
-        user: '/api/users'
+        user: '/api/users',
+        eje:  '/api/ejes'
     }
 
     constructor() {
@@ -40,6 +42,7 @@ export class Server {
     routes() {
         this.app.use(this.paths.user, userRoutes)
         this.app.use(this.paths.auth, authRoutes)
+        this.app.use(this.paths.eje,  ejeRoutes)
     }
 
     middlewares() {

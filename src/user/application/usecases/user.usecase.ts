@@ -4,10 +4,10 @@ import bcrypt from 'bcrypt'
 
 import { UserModel } from '../../domain/model/user.model'
 import { UserDto } from '../../domain/dto/user.dto'
-import { UserUseCaseInterface } from '../interfaces/user.interfaces'
+import { UserServiceInterface } from '../service/user.service'
 import { UserRepository } from '../../domain/repository/user.repository'
 
-export class UserUseCase implements UserUseCaseInterface {
+export class UserUseCase implements UserServiceInterface {
 
     HASH_SALT_MAX = 10
 
