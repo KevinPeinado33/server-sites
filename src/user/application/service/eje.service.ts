@@ -3,7 +3,7 @@ import { SubEjeModel } from '../../domain/model/sub-eje.model'
 
 export interface EjeServiceInterface {
 
-    getAllEjes(): Promise< EjeModel[]  | void[] >
+    getAllEjes(): Promise< EjeModel[]  | any []>
     getSubEjesByIdEje( idEje: number ): Promise< SubEjeModel[] >
     
 }

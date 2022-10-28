@@ -15,13 +15,14 @@ const catch_error_helper_1 = require("../../../helpers/errors/catch-error.helper
 class EjeController {
     constructor(ejeUseCase) {
         this.ejeUseCase = ejeUseCase;
+        this.SIZE_VALUE_NULL = 0;
         this.getEjes = this.getEjes.bind(this);
     }
     getEjes(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const results = yield this.ejeUseCase.getAllEjes();
-                if (!results) {
+                if (this.SIZE_VALUE_NULL === results.length) {
                     return (0, api_responses_1.message)({
                         res,
                         code: { type: 'NOT_FOUND', value: 404 },

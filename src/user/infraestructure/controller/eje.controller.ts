@@ -6,6 +6,8 @@ import { EjeUseCase } from '../../application/usecases/eje.usecase'
 
 export class EjeController {
 
+    private SIZE_VALUE_NULL = 0
+
     constructor(
         private readonly ejeUseCase: EjeUseCase
     ) {
@@ -18,7 +20,7 @@ export class EjeController {
             
             const results = await this.ejeUseCase.getAllEjes()
 
-            if ( !results ) {
+            if ( this.SIZE_VALUE_NULL === results.length ) {
                 return message({
                     res,
                     code: { type: 'NOT_FOUND', value: 404 },
@@ -38,4 +40,5 @@ export class EjeController {
         }
 
     }
+    
 }

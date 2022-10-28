@@ -31,7 +31,6 @@ class UserController {
     }
     postUser({ body }, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log({ body });
             try {
                 const user = yield this.userUseCase.createUser(body);
                 if (!user) {

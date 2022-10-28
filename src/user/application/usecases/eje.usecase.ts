@@ -11,29 +11,26 @@ export class EjeUseCase implements EjeServiceInterface {
         private readonly subRepository: Repository< SubEjeModel >
     ) {  }
 
-    async getAllEjes(): Promise<EjeModel[]> {
+    async getAllEjes(): Promise< EjeModel[] | any[] > {
 
         const results = await this.ejeRepository.findAll()
 
-        results.map( async ( eje ) => {
+        const ejes = await Promise.all(
             
-            const resultsSub = await this.getSubEjesByIdEje( eje.id! )
-            
-            eje.subEjes! = [ ...resultsSub ]
-            
-            console.log(results)
-            
-        })
-        
-        for (let i = 0; i < results.length; i++) {
-            
-            const resultsSub = await this.getSubEjesByIdEje( results[i].id! )
-            
-            results[i].subEjes = resultsSub
-        
-        }
+            results.map( async ( eje ) => {
 
-        return results
+                const resultsSub = await this.getSubEjesByIdEje( eje.id! )
+
+                const obj = { ...eje }
+                
+                obj.subEjes = resultsSub
+
+                return obj
+            
+            })
+        )
+
+        return ejes
 
     }
 

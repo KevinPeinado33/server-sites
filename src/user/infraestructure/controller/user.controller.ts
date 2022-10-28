@@ -30,9 +30,7 @@ export class UserController {
     }
 
     async postUser({ body }: Request, res: Response) {
-
-        console.log({ body })
-
+        
         try {
             
             const user = await this.userUseCase.createUser( body )
