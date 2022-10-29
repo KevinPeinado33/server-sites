@@ -7,7 +7,8 @@ export const options = {
         }
     },
     apis: [ 
-        'src/user/infraestructure/router/documentation/user.documentation.ts',
-        'src/user/infraestructure/router/documentation/auth.documentation.ts'
+        'src/modules/user/infraestructure/router/documentation/auth.documentation.ts',
+        'src/modules/user/infraestructure/router/documentation/user.documentation.ts',
+        'src/modules/academic/infraestructure/router/documentation/axe.documentation.ts',
     ]
 }

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
-const user_model_1 = require("../../user/domain/model/user.model");
-const eje_model_1 = require("../../user/domain/model/eje.model");
-const sub_eje_model_1 = require("../../user/domain/model/sub-eje.model");
+const user_model_1 = require("../../modules/user/domain/model/user.model");
+const axe_model_1 = require("../../modules/academic/domain/model/axe.model");
+const sub_axe_model_1 = require("../../modules/academic/domain/model/sub-axe.model");
 const db = new sequelize_typescript_1.Sequelize({
     repositoryMode: true,
     dialect: 'postgres',
@@ -11,11 +11,11 @@ const db = new sequelize_typescript_1.Sequelize({
     username: 'postgres',
     password: 'example',
     database: 'postgres',
-    // logging: false,
+    logging: false,
     models: [
         user_model_1.UserModel,
-        eje_model_1.EjeModel,
-        sub_eje_model_1.SubEjeModel
+        axe_model_1.AxeModel,
+        sub_axe_model_1.SubAxeModel
     ]
 });
 exports.default = db;

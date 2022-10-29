@@ -7,9 +7,9 @@ import swaggerJSDoc from 'swagger-jsdoc'
 import db from '../database/connection'
 import { options } from '../swagger/swagger'
 
-import userRoutes from '../../user/infraestructure/router/user.router'
-import authRoutes from '../../user/infraestructure/router/auth.router'
-import ejeRoutes  from '../../user/infraestructure/router/eje.router'
+import userRoutes from '../../modules/user/infraestructure/router/user.router'
+import authRoutes from '../../modules/user/infraestructure/router/auth.router'
+import ejeRoutes  from '../../modules/academic/infraestructure/router/axe.router'
 
 export class Server {
 
@@ -21,7 +21,7 @@ export class Server {
     private paths = {
         auth: '/api/auth',
         user: '/api/users',
-        eje:  '/api/ejes'
+        eje:  '/api/axes'
     }
 
     constructor() {

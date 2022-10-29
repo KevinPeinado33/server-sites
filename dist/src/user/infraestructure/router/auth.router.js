@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const connection_1 = __importDefault(require("../../../configuration/database/connection"));
 const user_model_1 = require("../../domain/model/user.model");
-const user_repository_1 = require("../../domain/repository/user.repository");
+const user_repository_1 = require("../../application/repository/user.repository");
 const user_usecase_1 = require("../../application/usecases/user.usecase");
 const auth_controller_1 = require("../controller/auth.controller");
 const router = (0, express_1.Router)();
