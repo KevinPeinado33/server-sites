@@ -10,10 +10,9 @@ const user_repository_1 = require("../../application/repository/user.repository"
 const user_usecase_1 = require("../../application/usecases/user.usecase");
 const user_controller_1 = require("../controller/user.controller");
 const validate_jwt_middlware_1 = require("../../../../middlewares/jwt/validate-jwt.middlware");
-const role_model_1 = require("../../domain/model/role.model");
 const router = (0, express_1.Router)();
 const userRepository = new user_repository_1.UserRepository(connection_1.default.getRepository(user_model_1.UserModel));
-const userUseCase = new user_usecase_1.UserUseCase(connection_1.default.getRepository(user_model_1.UserModel), connection_1.default.getRepository(role_model_1.RoleModel), userRepository);
+const userUseCase = new user_usecase_1.UserUseCase(connection_1.default.getRepository(user_model_1.UserModel), userRepository);
 const userController = new user_controller_1.UserController(userUseCase);
 const { getUserById, postUser, putUser, getUsers, getSqlPrueba } = userController;
 router.get('/get-all', getUsers);

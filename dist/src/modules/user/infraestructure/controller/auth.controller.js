@@ -47,20 +47,12 @@ class AuthController {
                     });
                 }
                 if (isTeacher) {
-                    const isRoleTeacher = yield this.userUseCase.userWithRoleTeacher(user.idRole);
-                    if (!isRoleTeacher) {
-                        return (0, api_responses_1.message)({
-                            res,
-                            code: { type: 'BAD_REQUEST', value: 400 },
-                            msg: 'No se ingresó la contraseña!'
-                        });
-                    }
                     token = yield (0, generate_jwt_helper_1.generateKey)(user.id);
                     return (0, api_responses_1.message)({
                         res,
                         code: { type: 'SUCCESS', value: 200 },
                         msg: 'Bienvenido profesor!',
-                        payload: { user, token }
+                        payload: { token }
                     });
                 }
                 const isCorrectPassword = yield bcrypt_1.default.compare(passw, user.password);
@@ -76,7 +68,7 @@ class AuthController {
                     res,
                     code: { type: 'SUCCESS', value: 200 },
                     msg: 'Bienvenido administrador!',
-                    payload: token
+                    payload: { token }
                 });
             }
             catch (error) {

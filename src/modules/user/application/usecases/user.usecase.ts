@@ -3,7 +3,6 @@ import { Repository } from 'sequelize-typescript'
 import bcrypt from 'bcrypt'
 
 import { UserModel } from '../../domain/model/user.model'
-import { RoleModel } from '../../domain/model/role.model'
 import { UserDto } from '../../domain/dto/user.dto'
 import { UserRepository } from '../repository/user.repository'
 
@@ -14,7 +13,6 @@ export class UserUseCase {
 
     constructor(
         private readonly repository     : Repository< UserModel >,
-        private readonly roleRepository : Repository< RoleModel >,
         private readonly userRepository : UserRepository
     ) { }
 
@@ -44,16 +42,6 @@ export class UserUseCase {
 
     async findUserById(id: number) {
         return await this.repository.findByPk( id )
-    }
-
-    async userWithRoleTeacher(idRole: number) {
-        
-        const roleFound = await this.roleRepository.findByPk( idRole )
-
-        if ( !roleFound ) return false
-
-        return roleFound?.name === this.ROLE_TEACHER
-
     }
 
 }

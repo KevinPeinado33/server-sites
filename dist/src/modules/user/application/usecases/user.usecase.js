@@ -15,9 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserUseCase = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 class UserUseCase {
-    constructor(repository, roleRepository, userRepository) {
+    constructor(repository, userRepository) {
         this.repository = repository;
-        this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.HASH_SALT_MAX = 10;
         this.ROLE_TEACHER = 'Profesor';
@@ -49,14 +48,6 @@ class UserUseCase {
     findUserById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.repository.findByPk(id);
-        });
-    }
-    userWithRoleTeacher(idRole) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const roleFound = yield this.roleRepository.findByPk(idRole);
-            if (!roleFound)
-                return false;
-            return (roleFound === null || roleFound === void 0 ? void 0 : roleFound.name) === this.ROLE_TEACHER;
         });
     }
 }

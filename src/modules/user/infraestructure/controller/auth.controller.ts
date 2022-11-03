@@ -46,16 +46,6 @@ export class AuthController {
             }
 
             if ( isTeacher ) {
-
-                const isRoleTeacher = await this.userUseCase.userWithRoleTeacher( user.idRole )
-
-                if ( !isRoleTeacher ) {
-                    return message({
-                        res,
-                        code: { type: 'BAD_REQUEST', value: 400 },
-                        msg: 'No se ingresó la contraseña!'
-                    })
-                }
                 
                 token = await generateKey( user.id! )
 
@@ -63,7 +53,7 @@ export class AuthController {
                     res,
                     code: { type: 'SUCCESS', value: 200 },
                     msg: 'Bienvenido profesor!',
-                    payload: { user, token }
+                    payload: { token }
                 })
 
             }
@@ -84,7 +74,7 @@ export class AuthController {
                 res,
                 code: { type: 'SUCCESS', value: 200 },
                 msg: 'Bienvenido administrador!',
-                payload: token
+                payload: { token }
             })
             
         } catch( error: any ) {
