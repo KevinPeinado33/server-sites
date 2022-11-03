@@ -9,46 +9,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserModel = void 0;
+exports.RoleModel = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-let UserModel = class UserModel extends sequelize_typescript_1.Model {
+let RoleModel = class RoleModel extends sequelize_typescript_1.Model {
 };
 __decorate([
     sequelize_typescript_1.AutoIncrement,
     sequelize_typescript_1.PrimaryKey,
     (0, sequelize_typescript_1.Column)({
         primaryKey: true,
-        field: 'id_user'
-    }),
-    __metadata("design:type", Number)
-], UserModel.prototype, "id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false
-    }),
-    __metadata("design:type", String)
-], UserModel.prototype, "email", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false
-    }),
-    __metadata("design:type", String)
-], UserModel.prototype, "password", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.NUMBER,
-        allowNull: false,
         field: 'id_rol'
     }),
     __metadata("design:type", Number)
-], UserModel.prototype, "idRole", void 0);
-UserModel = __decorate([
+], RoleModel.prototype, "id", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: false
+    }),
+    __metadata("design:type", String)
+], RoleModel.prototype, "name", void 0);
+RoleModel = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
-        tableName: 'users'
+        tableName: 'rol'
     })
-], UserModel);
-exports.UserModel = UserModel;
-//# sourceMappingURL=user.model.js.map
+], RoleModel);
+exports.RoleModel = RoleModel;
+//# sourceMappingURL=role.model.js.map

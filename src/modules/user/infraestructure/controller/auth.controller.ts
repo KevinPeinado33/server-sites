@@ -36,7 +36,7 @@ export class AuthController {
         try {
 
             const user = await this.userUseCase.findUserByEmail( email )
-
+            
             if ( !user ) {
                 return message({
                     res,
@@ -45,23 +45,24 @@ export class AuthController {
                 })
             }
 
-            if ( !user.isActive ) {
-                return message({
-                    res,
-                    code: { type: 'BAD_REQUEST', value: 400 },
-                    msg: `El usuario ${ user.names } está desactivado!`
-                })    
-            }
-            
-
             if ( isTeacher ) {
+
+                const isRoleTeacher = await this.userUseCase.userWithRoleTeacher( user.idRole )
+
+                if ( !isRoleTeacher ) {
+                    return message({
+                        res,
+                        code: { type: 'BAD_REQUEST', value: 400 },
+                        msg: 'No se ingresó la contraseña!'
+                    })
+                }
                 
                 token = await generateKey( user.id! )
 
                 return message({
                     res,
                     code: { type: 'SUCCESS', value: 200 },
-                    msg: `Bienvenido profesor ${ user.names } !`,
+                    msg: 'Bienvenido profesor!',
                     payload: { user, token }
                 })
 
@@ -73,7 +74,7 @@ export class AuthController {
                 return message({
                     res,
                     code: { type: 'BAD_REQUEST', value: 400 },
-                    msg: `Contraseña incorrecta!`
+                    msg: 'Contraseña incorrecta!'
                 })
             }
 
@@ -82,8 +83,8 @@ export class AuthController {
             message({
                 res,
                 code: { type: 'SUCCESS', value: 200 },
-                msg: `Bienvenido ${ user.names } !`,
-                payload: { user, token }
+                msg: 'Bienvenido administrador!',
+                payload: token
             })
             
         } catch( error: any ) {

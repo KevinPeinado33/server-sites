@@ -9,14 +9,15 @@ import {
 
 @Table({
     timestamps: false,
-    tableName: 'tb_users'
+    tableName: 'users'
 })
 export class UserModel extends Model {
     
     @AutoIncrement
     @PrimaryKey
     @Column({
-        primaryKey: true
+        primaryKey: true,
+        field: 'id_user'
     })
     id?: number
 
@@ -24,19 +25,7 @@ export class UserModel extends Model {
         type: DataType.STRING,
         allowNull: false
     })
-    names!: string
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
     email!: string
-    
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    userName!: string
 
     @Column({
         type: DataType.STRING,
@@ -45,10 +34,17 @@ export class UserModel extends Model {
     password!: string
 
     @Column({
+        type: DataType.NUMBER,
+        allowNull: false,
+        field: 'id_rol'
+    })
+    idRole!: number
+
+    /* @Column({
         type: DataType.BOOLEAN,
         allowNull: true,
         defaultValue: true
     })
-    isActive?: boolean
+    isActive?: boolean */
 
 }

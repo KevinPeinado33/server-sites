@@ -46,19 +46,20 @@ class AuthController {
                         msg: `El correo ${email}, no se ha encontrado.`
                     });
                 }
-                if (!user.isActive) {
-                    return (0, api_responses_1.message)({
-                        res,
-                        code: { type: 'BAD_REQUEST', value: 400 },
-                        msg: `El usuario ${user.names} está desactivado!`
-                    });
-                }
                 if (isTeacher) {
+                    const isRoleTeacher = yield this.userUseCase.userWithRoleTeacher(user.idRole);
+                    if (!isRoleTeacher) {
+                        return (0, api_responses_1.message)({
+                            res,
+                            code: { type: 'BAD_REQUEST', value: 400 },
+                            msg: 'No se ingresó la contraseña!'
+                        });
+                    }
                     token = yield (0, generate_jwt_helper_1.generateKey)(user.id);
                     return (0, api_responses_1.message)({
                         res,
                         code: { type: 'SUCCESS', value: 200 },
-                        msg: `Bienvenido profesor ${user.names} !`,
+                        msg: 'Bienvenido profesor!',
                         payload: { user, token }
                     });
                 }
@@ -67,15 +68,15 @@ class AuthController {
                     return (0, api_responses_1.message)({
                         res,
                         code: { type: 'BAD_REQUEST', value: 400 },
-                        msg: `Contraseña incorrecta!`
+                        msg: 'Contraseña incorrecta!'
                     });
                 }
                 token = yield (0, generate_jwt_helper_1.generateKey)(user.id);
                 (0, api_responses_1.message)({
                     res,
                     code: { type: 'SUCCESS', value: 200 },
-                    msg: `Bienvenido ${user.names} !`,
-                    payload: { user, token }
+                    msg: 'Bienvenido administrador!',
+                    payload: token
                 });
             }
             catch (error) {
