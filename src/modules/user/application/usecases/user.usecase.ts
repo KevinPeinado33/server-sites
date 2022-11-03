@@ -9,7 +9,6 @@ import { UserRepository } from '../repository/user.repository'
 export class UserUseCase {
 
     private HASH_SALT_MAX = 10
-    private ROLE_TEACHER  = 'Profesor' 
 
     constructor(
         private readonly repository     : Repository< UserModel >,
