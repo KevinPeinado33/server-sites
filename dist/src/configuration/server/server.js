@@ -21,14 +21,14 @@ const connection_1 = __importDefault(require("../database/connection"));
 const swagger_1 = require("../swagger/swagger");
 const user_router_1 = __importDefault(require("../../modules/user/infraestructure/router/user.router"));
 const auth_router_1 = __importDefault(require("../../modules/user/infraestructure/router/auth.router"));
-const axe_router_1 = __importDefault(require("../../modules/academic/infraestructure/router/axe.router"));
+const academic_router_1 = __importDefault(require("../../modules/academic/infraestructure/router/academic.router"));
 class Server {
     constructor() {
         this.PATH_SWAGGER = '/api-docs';
         this.paths = {
             auth: '/api/auth',
             user: '/api/users',
-            eje: '/api/axes'
+            eje: '/api/academic'
         };
         this.app = (0, express_1.default)();
         this.port = process.env.PORT || '8000';
@@ -44,7 +44,7 @@ class Server {
     routes() {
         this.app.use(this.paths.user, user_router_1.default);
         this.app.use(this.paths.auth, auth_router_1.default);
-        this.app.use(this.paths.eje, axe_router_1.default);
+        this.app.use(this.paths.eje, academic_router_1.default);
     }
     middlewares() {
         this.app.use((0, cors_1.default)());

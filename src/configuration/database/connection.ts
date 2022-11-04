@@ -4,6 +4,8 @@ import { UserModel } from '../../modules/user/domain/model/user.model'
 import { RoleModel } from '../../modules/user/domain/model/role.model'
 import { AxeModel } from '../../modules/academic/domain/model/axe.model'
 import { SubAxeModel } from '../../modules/academic/domain/model/sub-axe.model'
+import { SemesterModel } from '../../modules/academic/domain/model/semester.model'
+import { CycleModel } from '../../modules/academic/domain/model/cycle.model'
 
 const db = new Sequelize({
     repositoryMode: true,
@@ -12,12 +14,14 @@ const db = new Sequelize({
     username: 'user_back_end',
     password: 'W^JcAu$9',
     database: 'postgres',
-    logging: false,
+    /* logging: false, */
     models: [ 
         UserModel,
         RoleModel,
         AxeModel,
-        SubAxeModel
+        SubAxeModel,
+        SemesterModel,
+        CycleModel
     ]
 })
 

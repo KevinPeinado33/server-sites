@@ -9,7 +9,7 @@ import { options } from '../swagger/swagger'
 
 import userRoutes from '../../modules/user/infraestructure/router/user.router'
 import authRoutes from '../../modules/user/infraestructure/router/auth.router'
-import ejeRoutes  from '../../modules/academic/infraestructure/router/axe.router'
+import academicRoutes from '../../modules/academic/infraestructure/router/academic.router'
 
 export class Server {
 
@@ -21,7 +21,7 @@ export class Server {
     private paths = {
         auth: '/api/auth',
         user: '/api/users',
-        eje:  '/api/axes'
+        eje:  '/api/academic'
     }
 
     constructor() {
@@ -42,7 +42,7 @@ export class Server {
     routes() {
         this.app.use(this.paths.user, userRoutes)
         this.app.use(this.paths.auth, authRoutes)
-        this.app.use(this.paths.eje,  ejeRoutes)
+        this.app.use(this.paths.eje,  academicRoutes)
     }
 
     middlewares() {

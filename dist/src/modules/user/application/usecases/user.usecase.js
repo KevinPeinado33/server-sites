@@ -19,7 +19,6 @@ class UserUseCase {
         this.repository = repository;
         this.userRepository = userRepository;
         this.HASH_SALT_MAX = 10;
-        this.ROLE_TEACHER = 'Profesor';
     }
     createUser(user) {
         return __awaiter(this, void 0, void 0, function* () {

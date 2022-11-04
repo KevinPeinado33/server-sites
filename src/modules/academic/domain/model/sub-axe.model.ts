@@ -45,7 +45,7 @@ export class SubAxeModel extends Model {
 
     /**
      * Relación recursiva para la misma tabla
-     * porque tendra hijos.
+     * porque tendra hijos de si mismo.
      */
     @Column({
         type: DataType.NUMBER,

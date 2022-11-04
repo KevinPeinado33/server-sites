@@ -5,6 +5,8 @@ const user_model_1 = require("../../modules/user/domain/model/user.model");
 const role_model_1 = require("../../modules/user/domain/model/role.model");
 const axe_model_1 = require("../../modules/academic/domain/model/axe.model");
 const sub_axe_model_1 = require("../../modules/academic/domain/model/sub-axe.model");
+const semester_model_1 = require("../../modules/academic/domain/model/semester.model");
+const cycle_model_1 = require("../../modules/academic/domain/model/cycle.model");
 const db = new sequelize_typescript_1.Sequelize({
     repositoryMode: true,
     dialect: 'postgres',
@@ -12,12 +14,14 @@ const db = new sequelize_typescript_1.Sequelize({
     username: 'user_back_end',
     password: 'W^JcAu$9',
     database: 'postgres',
-    logging: false,
+    /* logging: false, */
     models: [
         user_model_1.UserModel,
         role_model_1.RoleModel,
         axe_model_1.AxeModel,
-        sub_axe_model_1.SubAxeModel
+        sub_axe_model_1.SubAxeModel,
+        semester_model_1.SemesterModel,
+        cycle_model_1.CycleModel
     ]
 });
 exports.default = db;
