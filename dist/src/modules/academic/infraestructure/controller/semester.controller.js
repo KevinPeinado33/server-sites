@@ -12,17 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SemesterController = void 0;
 const catch_error_helper_1 = require("../../../../helpers/errors/catch-error.helper");
 const api_responses_1 = require("../../../../configuration/responses/api-responses");
+const consts_general_helpers_1 = require("../../../../helpers/consts/consts-general.helpers");
 class SemesterController {
     constructor(semesterUseCase, cycleUseCase) {
         this.semesterUseCase = semesterUseCase;
         this.cycleUseCase = cycleUseCase;
-        this.SIZE_VALUE_ZERO = 0;
+        this.getSemesters = this.getSemesters.bind(this);
+        this.getCycleBySemeter = this.getCycleBySemeter.bind(this);
     }
     getSemesters(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const results = yield this.semesterUseCase.findSemesters();
-                if (this.SIZE_VALUE_ZERO === results.length) {
+                if (consts_general_helpers_1.SIZE_VALUE_ZERO === results.length) {
                     return (0, api_responses_1.message)({
                         res,
                         code: { type: 'NOT_FOUND', value: 404 },
@@ -46,11 +48,11 @@ class SemesterController {
             const { id } = params;
             try {
                 const results = yield this.cycleUseCase.getCyclesBySemester(Number(id));
-                if (this.SIZE_VALUE_ZERO === results.length) {
+                if (consts_general_helpers_1.SIZE_VALUE_ZERO === results.length) {
                     return (0, api_responses_1.message)({
                         res,
                         code: { type: 'NOT_FOUND', value: 404 },
-                        msg: 'El semstre seleccionado no tiene ciclos academicos!'
+                        msg: 'El semestre seleccionado no tiene ciclos academicos!'
                     });
                 }
                 (0, api_responses_1.message)({

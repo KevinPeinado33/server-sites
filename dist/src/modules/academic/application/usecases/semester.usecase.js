@@ -16,7 +16,7 @@ class SemesterUseCase {
     }
     findSemesters() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.repository.findAll({ raw: true });
+            return yield this.repository.findAll();
         });
     }
 }

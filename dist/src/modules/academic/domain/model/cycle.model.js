@@ -40,7 +40,7 @@ __decorate([
 CycleModel = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
-        tableName: 'cycles'
+        tableName: 'cycle'
     })
 ], CycleModel);
 exports.CycleModel = CycleModel;

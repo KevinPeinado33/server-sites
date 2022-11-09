@@ -4,10 +4,9 @@ import { AxeUseCase } from '../../application/usecases/axe.usecase'
 
 import { message } from '../../../../configuration/responses/api-responses'
 import { catchError } from '../../../../helpers/errors/catch-error.helper'
+import { SIZE_VALUE_ZERO } from '../../../../helpers/consts/consts-general.helpers'
 
 export class AxeController {
-
-    private SIZE_VALUE_ZERO = 0
 
     constructor(
         private readonly axeUseCase: AxeUseCase
@@ -21,7 +20,7 @@ export class AxeController {
 
             const results = await this.axeUseCase.getAllAxesAndSubAxes()
 
-            if ( this.SIZE_VALUE_ZERO === results.length ) {
+            if ( SIZE_VALUE_ZERO === results.length ) {
                 return message({
                     res,
                     code: { type: 'NOT_FOUND', value: 404 },

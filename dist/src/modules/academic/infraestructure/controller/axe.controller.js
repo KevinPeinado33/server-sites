@@ -12,17 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AxeController = void 0;
 const api_responses_1 = require("../../../../configuration/responses/api-responses");
 const catch_error_helper_1 = require("../../../../helpers/errors/catch-error.helper");
+const consts_general_helpers_1 = require("../../../../helpers/consts/consts-general.helpers");
 class AxeController {
     constructor(axeUseCase) {
         this.axeUseCase = axeUseCase;
-        this.SIZE_VALUE_ZERO = 0;
         this.getAxes = this.getAxes.bind(this);
     }
     getAxes(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const results = yield this.axeUseCase.getAllAxesAndSubAxes();
-                if (this.SIZE_VALUE_ZERO === results.length) {
+                if (consts_general_helpers_1.SIZE_VALUE_ZERO === results.length) {
                     return (0, api_responses_1.message)({
                         res,
                         code: { type: 'NOT_FOUND', value: 404 },

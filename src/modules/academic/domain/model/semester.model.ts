@@ -9,7 +9,7 @@ import {
 
 @Table({
     timestamps: false,
-    tableName: 'semesters'
+    tableName: 'semester'
 })
 export class SemesterModel extends Model {
 

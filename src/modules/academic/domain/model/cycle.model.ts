@@ -9,7 +9,7 @@ import {
 
 @Table({
     timestamps: false,
-    tableName: 'cycles'
+    tableName: 'cycle'
 })
 export class CycleModel extends Model {
     

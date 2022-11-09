@@ -8,7 +8,7 @@ export class SemesterUseCase {
     ) { }
 
     async findSemesters() {
-        return await this.repository.findAll({ raw: true })
+        return await this.repository.findAll()
     }
 
 }

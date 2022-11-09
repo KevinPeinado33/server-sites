@@ -11,7 +11,7 @@ export class CycleUseCase {
     async getCyclesBySemester( idSemester: number ) {
         return await this
                         .repository
-                        .findAll({ raw: true, where: { idSemester } })
+                        .findAll({ where: { idSemester } })
     }
 
 }

@@ -18,7 +18,7 @@ class CycleUseCase {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this
                 .repository
-                .findAll({ raw: true, where: { idSemester } });
+                .findAll({ where: { idSemester } });
         });
     }
 }

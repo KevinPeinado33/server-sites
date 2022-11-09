@@ -1,0 +1,1 @@
+export const SIZE_VALUE_ZERO = 0

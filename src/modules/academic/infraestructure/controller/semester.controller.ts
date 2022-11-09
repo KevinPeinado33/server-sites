@@ -5,15 +5,17 @@ import { SemesterUseCase } from '../../application/usecases/semester.usecase'
 
 import { catchError } from '../../../../helpers/errors/catch-error.helper'
 import { message } from '../../../../configuration/responses/api-responses'
+import { SIZE_VALUE_ZERO } from '../../../../helpers/consts/consts-general.helpers'
 
 export class SemesterController {
-
-    private SIZE_VALUE_ZERO = 0
 
     constructor(
         private readonly semesterUseCase: SemesterUseCase,
         private readonly cycleUseCase:    CycleUseCase
-    ) { }
+    ) {
+        this.getSemesters      = this.getSemesters.bind(this)
+        this.getCycleBySemeter = this.getCycleBySemeter.bind(this)
+    }
 
     async getSemesters(req: Request, res: Response) {
 
@@ -21,7 +23,7 @@ export class SemesterController {
             
             const results = await this.semesterUseCase.findSemesters()
 
-            if ( this.SIZE_VALUE_ZERO === results.length ) {
+            if ( SIZE_VALUE_ZERO === results.length ) {
                 return message({
                     res,
                     code: { type: 'NOT_FOUND', value: 404 },
@@ -50,11 +52,11 @@ export class SemesterController {
             
             const results = await this.cycleUseCase.getCyclesBySemester( Number( id ) )
 
-            if ( this.SIZE_VALUE_ZERO === results.length ) {
+            if ( SIZE_VALUE_ZERO === results.length ) {
                 return message({
                     res,
                     code: { type: 'NOT_FOUND', value: 404 },
-                    msg: 'El semstre seleccionado no tiene ciclos academicos!'
+                    msg: 'El semestre seleccionado no tiene ciclos academicos!'
                 })
             }
 

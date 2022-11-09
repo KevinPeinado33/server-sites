@@ -32,7 +32,7 @@ __decorate([
 SemesterModel = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
-        tableName: 'semesters'
+        tableName: 'semester'
     })
 ], SemesterModel);
 exports.SemesterModel = SemesterModel;

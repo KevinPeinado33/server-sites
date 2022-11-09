@@ -11,8 +11,8 @@ const db = new sequelize_typescript_1.Sequelize({
     repositoryMode: true,
     dialect: 'postgres',
     host: '129.151.123.131',
-    username: 'user_back_end',
-    password: 'W^JcAu$9',
+    username: 'postgres',
+    password: '4^fPVa5gCz',
     database: 'postgres',
     /* logging: false, */
     models: [

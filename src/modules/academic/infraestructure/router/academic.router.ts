@@ -37,7 +37,7 @@ const {
 } = semesterController
 
 
-router.get('/get-axes',      getAxes)
+router.get('/get-axes',       getAxes)
 router.get('/get-semesters',  getSemesters)
 router.get('/get-cycles/:id', getCycleBySemeter)
 
