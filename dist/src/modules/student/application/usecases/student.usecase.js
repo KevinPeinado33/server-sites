@@ -21,6 +21,18 @@ class StudentUseCase {
                 .findAll({ where: { idCycle } });
         });
     }
+    createStudent(student) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.repository.create(Object.assign({}, student));
+        });
+    }
+    findStudentByCodeAndCycle(code, idCycle) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this
+                .repository
+                .findAll({ where: { code, idCycle } });
+        });
+    }
 }
 exports.StudentUseCase = StudentUseCase;
 //# sourceMappingURL=student.usecase.js.map

@@ -17,6 +17,7 @@ class StudentController {
     constructor(stutendUseCase) {
         this.stutendUseCase = stutendUseCase;
         this.getAllStudentByCycle = this.getAllStudentByCycle.bind(this);
+        this.postCreateStudent = this.postCreateStudent.bind(this);
     }
     getAllStudentByCycle({ params }, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -35,6 +36,39 @@ class StudentController {
                     code: { type: 'SUCCESS', value: 200 },
                     msg: 'Lista de todos los alumnos por ciclo!',
                     payload: results
+                });
+            }
+            catch (error) {
+                (0, catch_error_helper_1.catchError)(error, res);
+            }
+        });
+    }
+    postCreateStudent({ body }, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { code, idCycle } = body;
+            try {
+                const studentsFound = yield this.stutendUseCase.findStudentByCodeAndCycle(code, Number(idCycle));
+                console.log({ studentsFound });
+                if (consts_general_helpers_1.SIZE_VALUE_ZERO !== studentsFound.length) {
+                    return (0, api_responses_1.message)({
+                        res,
+                        code: { type: 'BAD_REQUEST', value: 400 },
+                        msg: `El estudiante con el codigo ${code}, ya existe en este ciclo!`
+                    });
+                }
+                const studentCreated = yield this.stutendUseCase.createStudent(body);
+                if (!studentCreated) {
+                    return (0, api_responses_1.message)({
+                        res,
+                        code: { type: 'INTERNAL_ERROR', value: 500 },
+                        msg: 'Hubo un error al crear el usuario!'
+                    });
+                }
+                (0, api_responses_1.message)({
+                    res,
+                    code: { type: 'CREATED', value: 201 },
+                    msg: 'Usuario creado correctamente!',
+                    payload: studentCreated
                 });
             }
             catch (error) {

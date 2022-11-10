@@ -12,9 +12,11 @@ const studentUseCase = new StudentUseCase( db.getRepository( StudentModel ) )
 const studentController = new StudentController( studentUseCase )
 
 const { 
-    getAllStudentByCycle
+    getAllStudentByCycle,
+    postCreateStudent
 } = studentController
 
-router.get('/get-by-cycle/:id', getAllStudentByCycle)
+router.get ('/get-by-cycle/:id', getAllStudentByCycle)
+router.post('/create',   postCreateStudent)
 
 export default router

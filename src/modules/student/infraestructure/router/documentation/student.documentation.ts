@@ -1,5 +1,32 @@
 /**
  * @swagger
+ * components:
+ *  schemas:
+ *      Student:
+ *          type: object
+ *          properties:
+ *              code:
+ *                  type: string
+ *                  description: Codigo estudiantil
+ *              names:
+ *                  type: string
+ *                  description: Nombre completo del estudiante
+ *              idCycle:
+ *                  type: number
+ *                  description: Id del ciclo al cual pertenece
+ *          required:
+ *              - code
+ *              - names
+ *              - idCycle
+ *          example:
+ *              code: 20176661
+ *              names: Alumno prueba
+ *              idCycle: 20
+ *          
+ */
+
+/**
+ * @swagger
  * /api/students/get-by-cycle/{id}:
  *  get:
  *      summary: Busqueda de los alumnos por ciclo
@@ -13,4 +40,24 @@
  *      responses:
  *          200:
  *              description: List de todos Busqueda de los alumnos por ciclo
+ */
+
+/**
+ * @swagger
+ * /api/students/create:
+ *  post:
+ *      summary: Creacion de nuevo estudiante con su respectivo ciclo
+ *      tags: [ Students ]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      $ref: '#/components/schemas/Student'
+ *      responses:
+ *          201:
+ *              description: Estudiante creado correctamente!
+ *          500:
+ *              description: Error con el server
  */

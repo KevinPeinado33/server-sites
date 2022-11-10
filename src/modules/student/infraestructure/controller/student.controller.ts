@@ -11,6 +11,7 @@ export class StudentController {
         private readonly stutendUseCase: StudentUseCase
     ) {
         this.getAllStudentByCycle = this.getAllStudentByCycle.bind(this)
+        this.postCreateStudent    = this.postCreateStudent.bind(this)
     }
 
     async getAllStudentByCycle({ params }: Request, res: Response) {
@@ -36,6 +37,45 @@ export class StudentController {
                 payload: results
             })
 
+        } catch( error: any ) {
+            catchError( error, res )
+        }
+
+    }
+
+    async postCreateStudent({ body }: Request, res: Response) {
+
+        const { code, idCycle } = body
+
+        try {
+
+            const studentsFound = await this.stutendUseCase.findStudentByCodeAndCycle( code, Number( idCycle ) )
+
+            if ( SIZE_VALUE_ZERO !== studentsFound.length ) {
+                return message({
+                    res,
+                    code: { type: 'BAD_REQUEST', value: 400 },
+                    msg: `El estudiante con el codigo ${ code }, ya existe en este ciclo!`
+                })
+            }
+
+            const studentCreated = await this.stutendUseCase.createStudent( body )
+
+            if ( !studentCreated ) {
+                return message({
+                    res,
+                    code: { type: 'INTERNAL_ERROR', value: 500 },
+                    msg: 'Hubo un error al crear el usuario!'
+                })
+            }
+
+            message({
+                res,
+                code: { type: 'CREATED', value: 201 },
+                msg: 'Usuario creado correctamente!',
+                payload: studentCreated
+            })
+            
         } catch( error: any ) {
             catchError( error, res )
         }

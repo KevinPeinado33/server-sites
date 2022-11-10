@@ -11,7 +11,8 @@ const student_model_1 = require("../../domain/model/student.model");
 const router = (0, express_1.Router)();
 const studentUseCase = new student_usecase_1.StudentUseCase(connection_1.default.getRepository(student_model_1.StudentModel));
 const studentController = new student_controller_1.StudentController(studentUseCase);
-const { getAllStudentByCycle } = studentController;
+const { getAllStudentByCycle, postCreateStudent } = studentController;
 router.get('/get-by-cycle/:id', getAllStudentByCycle);
+router.post('/create', postCreateStudent);
 exports.default = router;
 //# sourceMappingURL=student.router.js.map
