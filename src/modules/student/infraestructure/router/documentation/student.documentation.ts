@@ -27,6 +27,33 @@
 
 /**
  * @swagger
+ * components:
+ *  schemas:
+ *      Attendance:
+ *          type: object
+ *          properties:
+ *              attended:
+ *                  type: boolean
+ *                  description: True o fale si llegó a asistir
+ *              date:
+ *                  type: Date
+ *                  description: Fecha en la que asistió
+ *              idStudent:
+ *                  type: number
+ *                  description: Id del estudiante a registrar
+ *          required:
+ *              - attended
+ *              - date
+ *              - idStudent
+ *          example:
+ *              attended: true
+ *              date: 2022/11/10
+ *              idStudent: 4
+ *          
+ */
+
+/**
+ * @swagger
  * /api/students/get-by-cycle/{id}:
  *  get:
  *      summary: Busqueda de los alumnos por ciclo
@@ -58,6 +85,26 @@
  *      responses:
  *          201:
  *              description: Estudiante creado correctamente!
+ *          500:
+ *              description: Error con el server
+ */
+
+/**
+ * @swagger
+ * /api/students/register-attendance:
+ *  post:
+ *      summary: Registrar asistencia del alumno
+ *      tags: [ Students ]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      $ref: '#/components/schemas/Attendance'
+ *      responses:
+ *          201:
+ *              description: Asistencia registrada correctamente!
  *          500:
  *              description: Error con el server
  */

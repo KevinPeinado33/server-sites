@@ -48,7 +48,6 @@ class StudentController {
             const { code, idCycle } = body;
             try {
                 const studentsFound = yield this.stutendUseCase.findStudentByCodeAndCycle(code, Number(idCycle));
-                console.log({ studentsFound });
                 if (consts_general_helpers_1.SIZE_VALUE_ZERO !== studentsFound.length) {
                     return (0, api_responses_1.message)({
                         res,

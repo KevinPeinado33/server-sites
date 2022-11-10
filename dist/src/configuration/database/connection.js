@@ -8,6 +8,7 @@ const sub_axe_model_1 = require("../../modules/academic/domain/model/sub-axe.mod
 const semester_model_1 = require("../../modules/academic/domain/model/semester.model");
 const cycle_model_1 = require("../../modules/academic/domain/model/cycle.model");
 const student_model_1 = require("../../modules/student/domain/model/student.model");
+const attendance_model_1 = require("../../modules/student/domain/model/attendance.model");
 const db = new sequelize_typescript_1.Sequelize({
     repositoryMode: true,
     dialect: 'postgres',
@@ -23,7 +24,8 @@ const db = new sequelize_typescript_1.Sequelize({
         sub_axe_model_1.SubAxeModel,
         semester_model_1.SemesterModel,
         cycle_model_1.CycleModel,
-        student_model_1.StudentModel
+        student_model_1.StudentModel,
+        attendance_model_1.AttendanceModel
     ]
 });
 exports.default = db;

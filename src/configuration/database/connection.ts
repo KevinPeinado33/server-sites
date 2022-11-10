@@ -7,6 +7,7 @@ import { SubAxeModel } from '../../modules/academic/domain/model/sub-axe.model'
 import { SemesterModel } from '../../modules/academic/domain/model/semester.model'
 import { CycleModel } from '../../modules/academic/domain/model/cycle.model'
 import { StudentModel } from '../../modules/student/domain/model/student.model'
+import { AttendanceModel } from '../../modules/student/domain/model/attendance.model'
 
 const db = new Sequelize({
     repositoryMode: true,
@@ -23,7 +24,8 @@ const db = new Sequelize({
         SubAxeModel,
         SemesterModel,
         CycleModel,
-        StudentModel
+        StudentModel,
+        AttendanceModel
     ]
 })
 
