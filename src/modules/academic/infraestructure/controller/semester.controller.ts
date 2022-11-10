@@ -68,7 +68,7 @@ export class SemesterController {
             })
 
         } catch( error: any ) {
-            catchError(error, res)
+            catchError( error, res )
         }
         
     }

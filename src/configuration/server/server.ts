@@ -7,9 +7,10 @@ import swaggerJSDoc from 'swagger-jsdoc'
 import db from '../database/connection'
 import { options } from '../swagger/swagger'
 
-import userRoutes from '../../modules/user/infraestructure/router/user.router'
-import authRoutes from '../../modules/user/infraestructure/router/auth.router'
+import userRoutes     from '../../modules/user/infraestructure/router/user.router'
+import authRoutes     from '../../modules/user/infraestructure/router/auth.router'
 import academicRoutes from '../../modules/academic/infraestructure/router/academic.router'
+import studenteRoutes from '../../modules/student/infraestructure/router/student.router'
 
 export class Server {
 
@@ -19,9 +20,10 @@ export class Server {
     private port: string
 
     private paths = {
-        auth: '/api/auth',
-        user: '/api/users',
-        eje:  '/api/academic'
+        auth:    '/api/auth',
+        user:    '/api/users',
+        eje:     '/api/academic',
+        student: '/api/students'
     }
 
     constructor() {
@@ -40,9 +42,10 @@ export class Server {
     }
 
     routes() {
-        this.app.use(this.paths.user, userRoutes)
-        this.app.use(this.paths.auth, authRoutes)
-        this.app.use(this.paths.eje,  academicRoutes)
+        this.app.use(this.paths.user,    userRoutes)
+        this.app.use(this.paths.auth,    authRoutes)
+        this.app.use(this.paths.eje,     academicRoutes)
+        this.app.use(this.paths.student, studenteRoutes)
     }
 
     middlewares() {

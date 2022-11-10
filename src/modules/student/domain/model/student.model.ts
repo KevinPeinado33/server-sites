@@ -17,12 +17,20 @@ export class StudentModel extends Model {
     @PrimaryKey
     @Column({
         primaryKey: true,
-        field: 'stutend_id'
+        field: 'student_id'
     })
     id?: number
 
+    @Column({
+        type: DataType.STRING,
+        allowNull: false
+    })
     code!: string
 
+    @Column({
+        type: DataType.STRING,
+        allowNull: false
+    })
     names!: string
 
     @Column({
