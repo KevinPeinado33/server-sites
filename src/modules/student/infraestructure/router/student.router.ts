@@ -11,23 +11,25 @@ import { AttendanceController } from '../controller/attendance.controller';
 
 const router               = Router()
 
-const studentUseCase       = new StudentUseCase( db.getRepository( StudentModel ) )
 const attendanceUseCase    = new AttendanceUseCase( db.getRepository( AttendanceModel ) )
+const studentUseCase       = new StudentUseCase( db.getRepository( StudentModel ), attendanceUseCase )
 
 const studentController    = new StudentController( studentUseCase )
 const attendanceController = new AttendanceController( attendanceUseCase )
 
 const { 
     getAllStudentByCycle,
-    postCreateStudent
+    postCreateStudent,
+    getReportsAttendance
 } = studentController
 
 const {
     postCreateAttendance
 } = attendanceController
 
-router.get ('/get-by-cycle/:id',    getAllStudentByCycle)
-router.post('/create',              postCreateStudent)
-router.post('/register-attendance', postCreateAttendance)
+router.get ('/get-by-cycle/:id',     getAllStudentByCycle)
+router.post('/create',               postCreateStudent)
+router.post('/register-attendance',  postCreateAttendance)
+router.get ('/reports-by-cycle/:id', getReportsAttendance)
 
 export default router

@@ -8,8 +8,14 @@ export class AttendanceUseCase {
         private readonly repository: Repository< AttendanceModel >
     ) {}
 
-    async createAttendanceByStudent(attendance: AttendanceModel) {
+    async createAttendance(attendance: AttendanceModel) {
        return await this.repository.create({ ...attendance })
+    }
+
+    async findAttendancesByStudent(idStudent: number) {
+        return await this
+                        .repository
+                        .findAll({ raw: true, where: { idStudent } })
     }
 
 }

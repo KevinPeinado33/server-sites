@@ -104,5 +104,21 @@
  *              description: Asistencia registrada correctamente!
  *          500:
  *              description: Error con el server
+ */
+/**
+ * @swagger
+ * /api/students/reports-by-cycle/{id}:
+ *  get:
+ *      summary: Reporte de alumnos por ciclo academico
+ *      tags: [ Students ]
+ *      parameters:
+ *          -   in: path
+ *              name: id
+ *              schema:
+ *                  type: number
+ *              required: true
+ *      responses:
+ *          200:
+ *              description: Report de asistencias por alumnos uwu.
  */ 
 //# sourceMappingURL=student.documentation.js.map

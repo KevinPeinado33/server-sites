@@ -17,7 +17,7 @@ export class AttendanceController {
 
         try {
 
-            const result = await this.attendanceUseCase.createAttendanceByStudent( body )
+            const result = await this.attendanceUseCase.createAttendance( body )
 
             if ( !result ) {
                 return message({

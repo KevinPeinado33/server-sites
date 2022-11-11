@@ -20,7 +20,7 @@ class AttendanceController {
     postCreateAttendance({ body }, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield this.attendanceUseCase.createAttendanceByStudent(body);
+                const result = yield this.attendanceUseCase.createAttendance(body);
                 if (!result) {
                     return (0, api_responses_1.message)({
                         res,

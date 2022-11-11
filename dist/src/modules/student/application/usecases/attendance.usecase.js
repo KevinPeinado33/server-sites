@@ -14,9 +14,16 @@ class AttendanceUseCase {
     constructor(repository) {
         this.repository = repository;
     }
-    createAttendanceByStudent(attendance) {
+    createAttendance(attendance) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.repository.create(Object.assign({}, attendance));
+        });
+    }
+    findAttendancesByStudent(idStudent) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this
+                .repository
+                .findAll({ raw: true, where: { idStudent } });
         });
     }
 }

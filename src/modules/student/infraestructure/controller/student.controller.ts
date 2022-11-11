@@ -12,6 +12,7 @@ export class StudentController {
     ) {
         this.getAllStudentByCycle = this.getAllStudentByCycle.bind(this)
         this.postCreateStudent    = this.postCreateStudent.bind(this)
+        this.getReportsAttendance = this.getReportsAttendance.bind(this)
     }
 
     async getAllStudentByCycle({ params }: Request, res: Response) {
@@ -76,6 +77,35 @@ export class StudentController {
                 payload: studentCreated
             })
             
+        } catch( error: any ) {
+            catchError( error, res )
+        }
+
+    }
+
+    async getReportsAttendance({ params }: Request, res: Response) {
+        
+        const { id } = params
+
+        try {
+
+            const results = await this.stutendUseCase.reportStudentsForCycle( Number( id ) )
+
+            if ( SIZE_VALUE_ZERO === results.length ) {
+                return message({
+                    res,
+                    code: { type: 'INTERNAL_ERROR', value: 500 },
+                    msg: 'No existe reportes!'
+                })
+            }
+            
+            message({
+                res,
+                code: { type: 'SUCCESS', value: 200 },
+                msg: 'Reportes por ciclo!',
+                payload: results
+            })
+
         } catch( error: any ) {
             catchError( error, res )
         }
