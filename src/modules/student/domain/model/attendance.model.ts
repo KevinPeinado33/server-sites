@@ -22,10 +22,10 @@ export class AttendanceModel extends Model {
     id?: number
 
     @Column({
-        type: DataType.BOOLEAN,
+        type: DataType.NUMBER,
         allowNull: false
     })
-    attended!: boolean
+    attended!: number
 
     @Column({
         type: DataType.STRING,

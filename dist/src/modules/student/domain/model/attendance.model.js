@@ -24,10 +24,10 @@ __decorate([
 ], AttendanceModel.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.BOOLEAN,
+        type: sequelize_typescript_1.DataType.NUMBER,
         allowNull: false
     }),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", Number)
 ], AttendanceModel.prototype, "attended", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({

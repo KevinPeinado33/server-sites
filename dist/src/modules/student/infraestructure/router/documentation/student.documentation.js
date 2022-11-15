@@ -33,8 +33,8 @@
  *          type: object
  *          properties:
  *              attended:
- *                  type: boolean
- *                  description: True o fale si llegó a asistir
+ *                  type: number
+ *                  description: 1 asisitio, 2 falto, 3 justificado
  *              date:
  *                  type: Date
  *                  description: Fecha en la que asistió
@@ -46,9 +46,9 @@
  *              - date
  *              - idStudent
  *          example:
- *              attended: true
+ *              attended: 1
  *              date: 2022/11/10
- *              idStudent: 4
+ *              idStudent: 3
  *
  */
 /**
