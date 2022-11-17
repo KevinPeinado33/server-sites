@@ -16,11 +16,12 @@ const attendanceUseCase = new attendance_usecase_1.AttendanceUseCase(connection_
 const studentUseCase = new student_usecase_1.StudentUseCase(connection_1.default.getRepository(student_model_1.StudentModel), attendanceUseCase);
 const studentController = new student_controller_1.StudentController(studentUseCase);
 const attendanceController = new attendance_controller_1.AttendanceController(attendanceUseCase);
-const { getAllStudentByCycle, postCreateStudent, getReportsAttendance } = studentController;
+const { getAllStudentByCycle, postCreateStudent, getReportsAttendance, getReportByStudentAndCycle } = studentController;
 const { postCreateAttendance } = attendanceController;
 router.get('/get-by-cycle/:id', getAllStudentByCycle);
 router.post('/create', postCreateStudent);
 router.post('/register-attendance', postCreateAttendance);
 router.get('/reports-by-cycle/:id', getReportsAttendance);
+router.get('/personal-report/:code/:cycle', getReportByStudentAndCycle);
 exports.default = router;
 //# sourceMappingURL=student.router.js.map

@@ -20,16 +20,18 @@ const attendanceController = new AttendanceController( attendanceUseCase )
 const { 
     getAllStudentByCycle,
     postCreateStudent,
-    getReportsAttendance
+    getReportsAttendance,
+    getReportByStudentAndCycle
 } = studentController
 
 const {
     postCreateAttendance
 } = attendanceController
 
-router.get ('/get-by-cycle/:id',     getAllStudentByCycle)
-router.post('/create',               postCreateStudent)
-router.post('/register-attendance',  postCreateAttendance)
-router.get ('/reports-by-cycle/:id', getReportsAttendance)
+router.get ('/get-by-cycle/:id',             getAllStudentByCycle)
+router.post('/create',                       postCreateStudent)
+router.post('/register-attendance',          postCreateAttendance)
+router.get ('/reports-by-cycle/:id',         getReportsAttendance)
+router.get ('/personal-report/:code/:cycle', getReportByStudentAndCycle)
 
 export default router

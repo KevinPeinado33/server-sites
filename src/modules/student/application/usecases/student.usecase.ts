@@ -1,10 +1,14 @@
 import { Repository } from 'sequelize-typescript'
 
 import { StudentModel } from '../../domain/model/student.model'
-import { AttendanceModel } from '../../domain/model/attendance.model'
 import { AttendanceUseCase } from './attendance.usecase'
+import { StudentReponse } from '../../infraestructure/responses/student.response'
 
 export class StudentUseCase {
+
+    private STUDENT_ASSITED = 1
+    private STUDENT_ABSENT  = 2
+    private STUDENT_EXCUSED = 3
     
     constructor(
         private readonly repository: Repository< StudentModel >,
@@ -25,16 +29,16 @@ export class StudentUseCase {
     async findStudentByCodeAndCycle(code: string, idCycle: number) {
         return await this
                         .repository
-                        .findAll({ where: { code, idCycle }})
+                        .findAll({ raw: true, where: { code, idCycle }})
     }
 
     async reportStudentsForCycle(idCycle: number) {
 
         const reports: StudentReponse[] = []
-        const studends                  = await this.findStudentsByCycle( idCycle )
+        const students                  = await this.findStudentsByCycle( idCycle )
         
         await Promise.all(
-            studends.map( async student => {
+            students.map( async student => {
 
                 const report      = new StudentReponse()      
                 const attendances = await this
@@ -43,7 +47,7 @@ export class StudentUseCase {
                 
                 const { id, code, names, idCycle } = student
 
-                report.build( id!, code, names, idCycle, attendances )
+                report.build({ id, code, names, idCycle, attendances })
 
                 reports.push ( report )
             
@@ -54,24 +58,41 @@ export class StudentUseCase {
 
     }
 
-}
+    async reportByStudentAndCycle(codeStudent: string, cycle: number) {
 
-class StudentReponse {
+        const reportStudent  = new StudentReponse()
 
-    id?:          number
-    code!:        string
-    names!:       string
-    idCycle!:     number
-    attendances!: AttendanceModel[]
+        const student        = await this.findStudentByCodeAndCycle( codeStudent, cycle )
+        const attendances    = await this
+                                        .attendanceUseCase
+                                        .findAttendancesByStudent( student[ 0 ].id! )
 
-    constructor() {}
+        const { 
+            id, 
+            code, 
+            names, 
+            idCycle 
+        }                    = student[ 0 ]
 
-    build(id: number, code: string, names: string, idCycle: number, attendances: AttendanceModel[]) {
-        this.id          = id
-        this.code        = code
-        this.names       = names
-        this.idCycle     = idCycle
-        this.attendances = attendances
+        const counter        = {
+            numAttendance: 0,
+            numFouls:      0,
+            numExcuses:    0
+        }
+
+        const fnAccumulator  = {
+            1: () => counter.numAttendance += 1,
+            2: () => counter.numFouls      += 1,
+            3: () => counter.numExcuses    += 1
+        }
+
+        attendances.forEach( attendance => fnAccumulator[ attendance.attended as keyof typeof fnAccumulator ]() )
+
+        reportStudent.build({ id, code, names, idCycle, ...counter, attendances })
+
+        return reportStudent
+
     }
 
 }
+

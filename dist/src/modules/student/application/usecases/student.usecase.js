@@ -10,10 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentUseCase = void 0;
+const student_response_1 = require("../../infraestructure/responses/student.response");
 class StudentUseCase {
     constructor(repository, attendanceUseCase) {
         this.repository = repository;
         this.attendanceUseCase = attendanceUseCase;
+        this.STUDENT_ASSITED = 1;
+        this.STUDENT_ABSENT = 2;
+        this.STUDENT_EXCUSED = 3;
     }
     findStudentsByCycle(idCycle) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -31,35 +35,48 @@ class StudentUseCase {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this
                 .repository
-                .findAll({ where: { code, idCycle } });
+                .findAll({ raw: true, where: { code, idCycle } });
         });
     }
     reportStudentsForCycle(idCycle) {
         return __awaiter(this, void 0, void 0, function* () {
             const reports = [];
-            const studends = yield this.findStudentsByCycle(idCycle);
-            yield Promise.all(studends.map((student) => __awaiter(this, void 0, void 0, function* () {
-                const report = new StudentReponse();
+            const students = yield this.findStudentsByCycle(idCycle);
+            yield Promise.all(students.map((student) => __awaiter(this, void 0, void 0, function* () {
+                const report = new student_response_1.StudentReponse();
                 const attendances = yield this
                     .attendanceUseCase
                     .findAttendancesByStudent(student.id);
                 const { id, code, names, idCycle } = student;
-                report.build(id, code, names, idCycle, attendances);
+                report.build({ id, code, names, idCycle, attendances });
                 reports.push(report);
             })));
             return reports;
         });
     }
-}
-exports.StudentUseCase = StudentUseCase;
-class StudentReponse {
-    constructor() { }
-    build(id, code, names, idCycle, attendances) {
-        this.id = id;
-        this.code = code;
-        this.names = names;
-        this.idCycle = idCycle;
-        this.attendances = attendances;
+    reportByStudentAndCycle(codeStudent, cycle) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const reportStudent = new student_response_1.StudentReponse();
+            const student = yield this.findStudentByCodeAndCycle(codeStudent, cycle);
+            const attendances = yield this
+                .attendanceUseCase
+                .findAttendancesByStudent(student[0].id);
+            const { id, code, names, idCycle } = student[0];
+            const counter = {
+                numAttendance: 0,
+                numFouls: 0,
+                numExcuses: 0
+            };
+            const fnAccumulator = {
+                1: () => counter.numAttendance += 1,
+                2: () => counter.numFouls += 1,
+                3: () => counter.numExcuses += 1
+            };
+            attendances.forEach(attendance => fnAccumulator[attendance.attended]());
+            reportStudent.build(Object.assign(Object.assign({ id, code, names, idCycle }, counter), { attendances }));
+            return reportStudent;
+        });
     }
 }
+exports.StudentUseCase = StudentUseCase;
 //# sourceMappingURL=student.usecase.js.map

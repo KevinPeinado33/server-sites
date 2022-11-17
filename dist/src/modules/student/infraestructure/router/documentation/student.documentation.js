@@ -120,5 +120,26 @@
  *      responses:
  *          200:
  *              description: Report de asistencias por alumnos uwu.
+ */
+/**
+ * @swagger
+ * /api/students/personal-report/{code}/{cycle}:
+ *  get:
+ *      summary: Reporte personal por alumnos y ciclo
+ *      tags: [ Students ]
+ *      parameters:
+ *          -   in: path
+ *              name: code
+ *              schema:
+ *                  type: string
+ *              required: true
+ *          -   in: path
+ *              name: cycle
+ *              schema:
+ *                  type: number
+ *              required: true
+ *      responses:
+ *          200:
+ *              description: Reporte por alumnos
  */ 
 //# sourceMappingURL=student.documentation.js.map

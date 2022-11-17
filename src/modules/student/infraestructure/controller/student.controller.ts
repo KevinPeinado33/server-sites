@@ -10,9 +10,10 @@ export class StudentController {
     constructor(
         private readonly stutendUseCase: StudentUseCase
     ) {
-        this.getAllStudentByCycle = this.getAllStudentByCycle.bind(this)
-        this.postCreateStudent    = this.postCreateStudent.bind(this)
-        this.getReportsAttendance = this.getReportsAttendance.bind(this)
+        this.getAllStudentByCycle       = this.getAllStudentByCycle.bind(this)
+        this.postCreateStudent          = this.postCreateStudent.bind(this)
+        this.getReportsAttendance       = this.getReportsAttendance.bind(this)
+        this.getReportByStudentAndCycle = this.getReportByStudentAndCycle.bind(this)
     }
 
     async getAllStudentByCycle({ params }: Request, res: Response) {
@@ -104,6 +105,36 @@ export class StudentController {
                 code: { type: 'SUCCESS', value: 200 },
                 msg: 'Reportes por ciclo!',
                 payload: results
+            })
+
+        } catch( error: any ) {
+            catchError( error, res )
+        }
+
+    }
+
+    async getReportByStudentAndCycle({ params }: Request, res: Response) {
+
+        const { code, cycle } = params
+
+        try {
+
+            const result = await this.stutendUseCase.reportByStudentAndCycle( code, Number( cycle ) )
+
+
+            if ( !result ) {
+                return message({
+                    res,
+                    code: { type: 'INTERNAL_ERROR', value: 500 },
+                    msg: 'Este alumno nunca asistió a los activates!'
+                })
+            }
+
+            message({
+                res,
+                code: { type: 'SUCCESS', value: 200 },
+                msg: `Reporte de asistencias del alumno ${ result.names } !`,
+                payload: result
             })
 
         } catch( error: any ) {

@@ -19,6 +19,7 @@ class StudentController {
         this.getAllStudentByCycle = this.getAllStudentByCycle.bind(this);
         this.postCreateStudent = this.postCreateStudent.bind(this);
         this.getReportsAttendance = this.getReportsAttendance.bind(this);
+        this.getReportByStudentAndCycle = this.getReportByStudentAndCycle.bind(this);
     }
     getAllStudentByCycle({ params }, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -93,6 +94,30 @@ class StudentController {
                     code: { type: 'SUCCESS', value: 200 },
                     msg: 'Reportes por ciclo!',
                     payload: results
+                });
+            }
+            catch (error) {
+                (0, catch_error_helper_1.catchError)(error, res);
+            }
+        });
+    }
+    getReportByStudentAndCycle({ params }, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { code, cycle } = params;
+            try {
+                const result = yield this.stutendUseCase.reportByStudentAndCycle(code, Number(cycle));
+                if (!result) {
+                    return (0, api_responses_1.message)({
+                        res,
+                        code: { type: 'INTERNAL_ERROR', value: 500 },
+                        msg: 'Este alumno nunca asistió a los activates!'
+                    });
+                }
+                (0, api_responses_1.message)({
+                    res,
+                    code: { type: 'SUCCESS', value: 200 },
+                    msg: `Reporte de asistencias del alumno ${result.names} !`,
+                    payload: result
                 });
             }
             catch (error) {
