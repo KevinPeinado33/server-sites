@@ -5,11 +5,7 @@ import { AttendanceUseCase } from './attendance.usecase'
 import { StudentReponse } from '../../infraestructure/responses/student.response'
 
 export class StudentUseCase {
-
-    private STUDENT_ASSITED = 1
-    private STUDENT_ABSENT  = 2
-    private STUDENT_EXCUSED = 3
-    
+        
     constructor(
         private readonly repository: Repository< StudentModel >,
         private readonly attendanceUseCase: AttendanceUseCase
