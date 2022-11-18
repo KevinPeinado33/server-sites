@@ -109,7 +109,7 @@ class StudentController {
                 if (!result) {
                     return (0, api_responses_1.message)({
                         res,
-                        code: { type: 'INTERNAL_ERROR', value: 500 },
+                        code: { type: 'NOT_FOUND', value: 404 },
                         msg: 'Este alumno nunca asistió a los activates!'
                     });
                 }

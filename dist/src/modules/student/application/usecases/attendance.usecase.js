@@ -26,6 +26,13 @@ class AttendanceUseCase {
                 .findAll({ raw: true, where: { idStudent } });
         });
     }
+    findAttendanceByDateAndStudent(idStudent, date) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this
+                .repository
+                .findAll({ where: { idStudent, date } });
+        });
+    }
 }
 exports.AttendanceUseCase = AttendanceUseCase;
 //# sourceMappingURL=attendance.usecase.js.map

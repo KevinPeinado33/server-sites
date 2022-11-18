@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AttendanceController = void 0;
 const catch_error_helper_1 = require("../../../../helpers/errors/catch-error.helper");
 const api_responses_1 = require("../../../../configuration/responses/api-responses");
+const consts_general_helpers_1 = require("../../../../helpers/consts/consts-general.helpers");
 class AttendanceController {
     constructor(attendanceUseCase) {
         this.attendanceUseCase = attendanceUseCase;
@@ -19,7 +20,18 @@ class AttendanceController {
     }
     postCreateAttendance({ body }, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { idStudent, date } = body;
             try {
+                const resultRepeated = yield this
+                    .attendanceUseCase
+                    .findAttendanceByDateAndStudent(idStudent, date);
+                if (consts_general_helpers_1.SIZE_VALUE_ZERO !== resultRepeated.length) {
+                    return (0, api_responses_1.message)({
+                        res,
+                        code: { type: 'BAD_REQUEST', value: 400 },
+                        msg: 'No se puede registrar 2 veces la misma asistencia!'
+                    });
+                }
                 const result = yield this.attendanceUseCase.createAttendance(body);
                 if (!result) {
                     return (0, api_responses_1.message)({

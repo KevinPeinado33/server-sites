@@ -15,9 +15,6 @@ class StudentUseCase {
     constructor(repository, attendanceUseCase) {
         this.repository = repository;
         this.attendanceUseCase = attendanceUseCase;
-        this.STUDENT_ASSITED = 1;
-        this.STUDENT_ABSENT = 2;
-        this.STUDENT_EXCUSED = 3;
     }
     findStudentsByCycle(idCycle) {
         return __awaiter(this, void 0, void 0, function* () {

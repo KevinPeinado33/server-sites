@@ -18,4 +18,10 @@ export class AttendanceUseCase {
                         .findAll({ raw: true, where: { idStudent } })
     }
 
+    async findAttendanceByDateAndStudent(idStudent: number, date: string) {
+        return await this
+                        .repository
+                        .findAll({ where: { idStudent, date } })
+    }
+
 }
