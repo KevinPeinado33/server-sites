@@ -13,7 +13,7 @@
  * @swagger
  * /api/academic/get-semesters:
  *  get:
- *      summary: Lista de todo los ciclos academicos sin importar si ya pasaron.
+ *      summary: Lista de todo los semestres academicos sin condiciones.
  *      tags: [ Academic ]
  *      responses:
  *          200:
