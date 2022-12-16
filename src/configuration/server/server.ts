@@ -11,6 +11,7 @@ import userRoutes     from '../../modules/user/infraestructure/router/user.route
 import authRoutes     from '../../modules/user/infraestructure/router/auth.router'
 import academicRoutes from '../../modules/academic/infraestructure/router/academic.router'
 import studenteRoutes from '../../modules/student/infraestructure/router/student.router'
+import eventRoutes    from '../../modules/events/infraestructure/router/event-attendance.router'
 
 export class Server {
 
@@ -23,7 +24,8 @@ export class Server {
         auth:    '/api/auth',
         user:    '/api/users',
         eje:     '/api/academic',
-        student: '/api/students'
+        student: '/api/students',
+        event:   '/api/events'
     }
 
     constructor() {
@@ -46,6 +48,7 @@ export class Server {
         this.app.use(this.paths.auth,    authRoutes)
         this.app.use(this.paths.eje,     academicRoutes)
         this.app.use(this.paths.student, studenteRoutes)
+        this.app.use(this.paths.event,   eventRoutes)
     }
 
     middlewares() {

@@ -8,6 +8,8 @@ import { SemesterModel } from '../../modules/academic/domain/model/semester.mode
 import { CycleModel } from '../../modules/academic/domain/model/cycle.model'
 import { StudentModel } from '../../modules/student/domain/model/student.model'
 import { AttendanceModel } from '../../modules/student/domain/model/attendance.model'
+import { EventAttendanceModel } from '../../modules/events/domain/model/event-attendance.model'
+import { TypeAttendanceModel } from '../../modules/events/domain/model/type-attendance.model'
 
 const db = new Sequelize({
     repositoryMode: true,
@@ -25,7 +27,9 @@ const db = new Sequelize({
         SemesterModel,
         CycleModel,
         StudentModel,
-        AttendanceModel
+        AttendanceModel,
+        EventAttendanceModel,
+        TypeAttendanceModel
     ]
 })
 

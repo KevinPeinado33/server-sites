@@ -9,6 +9,8 @@ const semester_model_1 = require("../../modules/academic/domain/model/semester.m
 const cycle_model_1 = require("../../modules/academic/domain/model/cycle.model");
 const student_model_1 = require("../../modules/student/domain/model/student.model");
 const attendance_model_1 = require("../../modules/student/domain/model/attendance.model");
+const event_attendance_model_1 = require("../../modules/events/domain/model/event-attendance.model");
+const type_attendance_model_1 = require("../../modules/events/domain/model/type-attendance.model");
 const db = new sequelize_typescript_1.Sequelize({
     repositoryMode: true,
     dialect: 'postgres',
@@ -25,7 +27,9 @@ const db = new sequelize_typescript_1.Sequelize({
         semester_model_1.SemesterModel,
         cycle_model_1.CycleModel,
         student_model_1.StudentModel,
-        attendance_model_1.AttendanceModel
+        attendance_model_1.AttendanceModel,
+        event_attendance_model_1.EventAttendanceModel,
+        type_attendance_model_1.TypeAttendanceModel
     ]
 });
 exports.default = db;

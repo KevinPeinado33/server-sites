@@ -23,6 +23,7 @@ const user_router_1 = __importDefault(require("../../modules/user/infraestructur
 const auth_router_1 = __importDefault(require("../../modules/user/infraestructure/router/auth.router"));
 const academic_router_1 = __importDefault(require("../../modules/academic/infraestructure/router/academic.router"));
 const student_router_1 = __importDefault(require("../../modules/student/infraestructure/router/student.router"));
+const event_attendance_router_1 = __importDefault(require("../../modules/events/infraestructure/router/event-attendance.router"));
 class Server {
     constructor() {
         this.PATH_SWAGGER = '/api-docs';
@@ -30,7 +31,8 @@ class Server {
             auth: '/api/auth',
             user: '/api/users',
             eje: '/api/academic',
-            student: '/api/students'
+            student: '/api/students',
+            event: '/api/events'
         };
         this.app = (0, express_1.default)();
         this.port = process.env.PORT || '8000';
@@ -48,6 +50,7 @@ class Server {
         this.app.use(this.paths.auth, auth_router_1.default);
         this.app.use(this.paths.eje, academic_router_1.default);
         this.app.use(this.paths.student, student_router_1.default);
+        this.app.use(this.paths.event, event_attendance_router_1.default);
     }
     middlewares() {
         this.app.use((0, cors_1.default)());
