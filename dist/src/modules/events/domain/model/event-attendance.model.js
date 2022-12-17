@@ -81,7 +81,7 @@ __decorate([
         allowNull: false,
         field: 'id_attendance_type'
     }),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], EventAttendanceModel.prototype, "attendanceType", void 0);
 EventAttendanceModel = __decorate([
     (0, sequelize_typescript_1.Table)({

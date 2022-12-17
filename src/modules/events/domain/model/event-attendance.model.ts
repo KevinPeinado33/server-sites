@@ -72,6 +72,6 @@ export class EventAttendanceModel extends Model {
         allowNull: false,
         field: 'id_attendance_type'
     })
-    attendanceType!: string
+    attendanceType!: number
 
 }

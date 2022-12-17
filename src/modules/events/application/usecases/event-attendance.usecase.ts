@@ -18,7 +18,13 @@ export class EventAttendanceUseCase {
     }
 
     async updateEvent(dtoEvent: EventAttendanceDto) {
-        return await this.eventRepository.update({ ...dtoEvent }, { where: { id: dtoEvent.id }})
+
+        const { id, ...restEvent } = dtoEvent
+
+        return await this
+                        .eventRepository
+                        .update({ ...restEvent }, { where: { id }})
+                        
     }
 
 }
